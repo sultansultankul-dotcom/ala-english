@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B1628">
+<meta name="supported-color-schemes" content="dark">
+<title>ALA English — Staff Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { color-scheme: dark; background:#0B1628; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+:root {
+  color-scheme: dark;
+  --navy:#0B1628; --navy-mid:#13263D; --navy-card:#192E47;
+  --gold:#C9A050; --gold-dim:#7A5C20; --ice:#EEF3F8; --muted:#6A85A0;
+  --success:#2A8C5E; --danger:#C0442A;
+  --accent:#C9A050; --accent-dim:rgba(201,160,80,0.18); --accent-soft:rgba(201,160,80,0.10);
+}
+body { font-family:'Inter',sans-serif; background:var(--navy); color:var(--ice); min-height:100vh; -webkit-font-smoothing:antialiased; }
+.ru-text{display:none;} body.show-ru .ru-text{display:block;}
+.ru-inline{display:none;} body.show-ru .ru-inline{display:inline;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;padding:0 1.5rem;
+  background:rgba(11,22,40,0.97);border-bottom:1px solid var(--accent-dim);backdrop-filter:blur(10px);height:60px;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold);
+  letter-spacing:0.04em;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;}
+.nav-logo span{color:var(--ice);font-weight:400;}
+.nav-dept{margin-left:1rem;padding:4px 12px;border-radius:2px;font-size:0.72rem;letter-spacing:0.08em;
+  text-transform:uppercase;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-dim);
+  white-space:nowrap;display:none;}
+.nav-dept.show{display:inline-block;}
+.nav-tabs{display:flex;margin-left:auto;}
+.nav-tab{padding:0 1rem;height:60px;display:none;align-items:center;font-size:0.74rem;font-weight:500;
+  letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;user-select:none;}
+.nav-tab.visible{display:flex;}
+.nav-tab:hover{color:var(--ice);}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.ru-toggle{margin-left:1.2rem;padding:6px 12px;border-radius:3px;cursor:pointer;font-size:0.72rem;font-weight:600;
+  letter-spacing:0.06em;border:1px solid var(--accent-dim);background:var(--accent-soft);color:var(--accent);
+  white-space:nowrap;transition:all .15s;}
+.ru-toggle:hover{border-color:var(--accent);}
+.ru-toggle.off{background:transparent;color:var(--muted);border-color:var(--navy-mid);}
+
+.section{display:none;min-height:calc(100vh - 60px);}
+.section.active{display:block;}
+
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:4.5rem 2rem 2.5rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,160,80,0.08) 0%,transparent 70%);pointer-events:none;}
+.hero-eyebrow{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:1.2rem;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:32px;height:1px;background:var(--gold-dim);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);line-height:1.12;font-weight:700;
+  color:var(--ice);margin-bottom:0.7rem;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:0.95rem;color:var(--muted);max-width:480px;line-height:1.7;}
+.hero-sub .ru-text{margin-top:0.5rem;font-size:0.85rem;}
+.dept-prompt{text-align:center;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin:1rem 0 1.8rem;}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;
+  padding:0 2rem 4rem;max-width:920px;margin:0 auto;}
+.module-card{background:var(--navy-card);border:1px solid rgba(201,160,80,0.12);border-radius:4px;display:flex;
+  overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;}
+.module-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.4);}
+.module-card-strip{width:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1rem 0;position:relative;font-size:1.6rem;}
+.module-card-strip::after{content:'';position:absolute;right:0;top:18%;height:64%;width:1px;border-right:1px dashed rgba(255,255,255,0.18);}
+.module-card-body{flex:1;padding:1.4rem 1.3rem;}
+.card-gate{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+.card-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--ice);margin-bottom:0.15rem;}
+.card-title-ru{font-size:0.82rem;color:var(--muted);margin-bottom:0.7rem;}
+.card-desc{font-size:0.78rem;color:var(--muted);line-height:1.55;margin-bottom:1rem;}
+.card-meta{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;}
+.card-badge{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;}
+.card-go{margin-left:auto;font-size:1.1rem;transition:transform .2s;}
+.module-card:hover .card-go{transform:translateX(4px);}
+
+.deptmenu-wrap{max-width:760px;margin:0 auto;padding:3rem 2rem;}
+.deptmenu-head{text-align:center;margin-bottom:2.5rem;}
+.deptmenu-head .icon{font-size:3rem;}
+.deptmenu-head h2{font-family:'Playfair Display',serif;font-size:2rem;margin:0.5rem 0 0.2rem;color:var(--accent);}
+.deptmenu-head .ru-text{font-size:0.9rem;color:var(--muted);}
+.deptmenu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+.menu-tile{background:var(--navy-card);border:1px solid var(--accent-dim);border-radius:4px;padding:1.6rem 1.4rem;
+  cursor:pointer;transition:all .2s;text-align:center;}
+.menu-tile:hover{transform:translateY(-3px);border-color:var(--accent);background:var(--accent-soft);}
+.menu-tile .mt-icon{font-size:1.8rem;}
+.menu-tile h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin:0.5rem 0 0.1rem;}
+.menu-tile p{font-size:0.78rem;color:var(--muted);}
+
+.fc-wrapper{max-width:700px;margin:0 auto;padding:2.2rem 2rem;}
+.fc-header{text-align:center;margin-bottom:1.8rem;}
+.fc-header h2{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:0.3rem;}
+.fc-counter{font-size:0.78rem;color:var(--muted);}
+.fc-categories{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.8rem;}
+.cat-btn{padding:5px 14px;border-radius:2px;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--accent-dim);color:var(--muted);cursor:pointer;transition:all .15s;}
+.cat-btn:hover,.cat-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+.flip-scene{width:100%;perspective:1200px;margin-bottom:1.6rem;cursor:pointer;}
+.flip-card{position:relative;width:100%;min-height:290px;transform-style:preserve-3d;transition:transform .5s ease;}
+.flip-card.flipped{transform:rotateY(180deg);}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;background:var(--navy-card);
+  border:1px solid var(--accent-dim);border-radius:4px;padding:2.5rem 2rem;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;}
+.flip-back{transform:rotateY(180deg);border-color:var(--accent);}
+.flip-face-label{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.9rem;}
+.flip-word{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--ice);margin-bottom:0.3rem;line-height:1.18;}
+.flip-ru-word{font-size:1.05rem;color:var(--accent);margin-bottom:0.6rem;}
+.flip-phonetic{font-size:0.82rem;color:var(--muted);margin-bottom:0.9rem;}
+.flip-category{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--accent-soft);color:var(--accent);}
+.flip-definition{font-size:1.05rem;color:var(--ice);line-height:1.55;margin-bottom:0.5rem;}
+.flip-def-ru{font-size:0.92rem;color:var(--accent);line-height:1.5;margin-bottom:1rem;}
+.flip-example{font-size:0.85rem;color:var(--muted);font-style:italic;line-height:1.5;}
+.flip-example-ru{font-size:0.8rem;color:var(--muted);line-height:1.5;margin-top:0.3rem;}
+.flip-hint{font-size:0.72rem;color:var(--muted);margin-top:1.2rem;}
+.fc-controls{display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;}
+.btn{padding:10px 22px;border-radius:3px;font-size:0.8rem;font-weight:500;letter-spacing:0.05em;cursor:pointer;
+  transition:all .15s;border:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-ghost{background:transparent;border:1px solid var(--accent-dim);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--ice);}
+.btn-primary{background:var(--accent);color:var(--navy);font-weight:600;}
+.btn-primary:hover{filter:brightness(1.12);}
+.btn-success{background:var(--success);color:#fff;}
+.btn-danger{background:transparent;border:1px solid rgba(192,68,42,0.4);color:#e07060;}
+.btn-danger:hover{background:rgba(192,68,42,0.15);}
+.speak-btn{margin:0 0 0.9rem;padding:6px 16px;border-radius:20px;font-size:0.76rem;font-weight:500;cursor:pointer;
+  background:var(--accent-soft);border:1px solid var(--accent-dim);color:var(--accent);transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
+.speak-btn:hover{border-color:var(--accent);background:var(--accent);color:var(--navy);}
+.speak-btn.speaking{background:var(--accent);color:var(--navy);}
+.speak-mini{margin-left:6px;padding:1px 8px;border-radius:12px;font-size:0.72rem;cursor:pointer;
+  background:transparent;border:1px solid var(--accent-dim);color:var(--accent);vertical-align:middle;transition:all .15s;}
+.speak-mini:hover{background:var(--accent);color:var(--navy);border-color:var(--accent);}
+.fc-progress-row{display:flex;gap:3px;margin-top:1.6rem;justify-content:center;flex-wrap:wrap;}
+.fc-dot{width:8px;height:8px;border-radius:50%;background:var(--navy-mid);transition:background .2s;}
+.fc-dot.seen{background:var(--accent-dim);}.fc-dot.known{background:var(--success);}.fc-dot.current{background:var(--accent);}
+
+.quiz-wrapper{max-width:640px;margin:0 auto;padding:2.2rem 2rem;}
+.quiz-header{text-align:center;margin-bottom:2rem;}
+.quiz-header h2{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:0.3rem;}
+.quiz-scoreboard{display:flex;gap:2.2rem;justify-content:center;margin-bottom:1.8rem;flex-wrap:wrap;}
+.score-item{text-align:center;}
+.score-val{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--accent);}
+.score-label{font-size:0.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+.quiz-q-box{background:var(--navy-card);border:1px solid var(--accent-dim);border-radius:4px;padding:1.8rem;margin-bottom:1.1rem;}
+.quiz-q-num{font-size:0.66rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem;}
+.quiz-q-text{font-size:1.12rem;line-height:1.5;}
+.quiz-q-ru{font-size:0.88rem;color:var(--accent);margin-top:0.4rem;}
+.quiz-options{display:flex;flex-direction:column;gap:0.6rem;}
+.opt-btn{background:var(--navy-card);border:1px solid var(--accent-dim);border-radius:3px;padding:0.85rem 1.1rem;
+  display:flex;align-items:center;gap:0.9rem;cursor:pointer;transition:all .15s;text-align:left;color:var(--ice);}
+.opt-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft);}
+.opt-btn.correct{border-color:var(--success);background:rgba(42,140,94,0.15);color:#6fcfa0;}
+.opt-btn.wrong{border-color:var(--danger);background:rgba(192,68,42,0.12);color:#e07060;}
+.opt-btn:disabled{cursor:default;}
+.opt-letter{width:28px;height:28px;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:0.72rem;font-weight:600;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-dim);}
+.opt-text{font-size:0.9rem;}
+.quiz-feedback{margin-top:1rem;padding:0.8rem 1rem;border-radius:3px;font-size:0.85rem;line-height:1.5;display:none;}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.ok{background:rgba(42,140,94,0.12);border:1px solid rgba(42,140,94,0.3);color:#6fcfa0;}
+.quiz-feedback.bad{background:rgba(192,68,42,0.1);border:1px solid rgba(192,68,42,0.3);color:#e08070;}
+.fb-ru{display:block;margin-top:4px;color:var(--ice);opacity:0.85;}
+.quiz-nav{display:flex;justify-content:flex-end;margin-top:1.1rem;}
+.quiz-results{text-align:center;padding:2.5rem 2rem;display:none;}
+.quiz-results.show{display:block;}
+.result-ring{width:120px;height:120px;border-radius:50%;margin:0 auto 1.4rem;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;border:3px solid var(--accent);}
+.result-score-big{font-family:'Playfair Display',serif;font-size:2.3rem;color:var(--accent);line-height:1;}
+.result-score-max{font-size:0.76rem;color:var(--muted);}
+.result-msg{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:0.3rem;}
+.result-sub{font-size:0.86rem;color:var(--muted);margin-bottom:1.8rem;}
+
+.pb-wrapper{max-width:720px;margin:0 auto;padding:2.2rem 2rem;}
+.pb-header{text-align:center;margin-bottom:1.8rem;}
+.pb-header h2{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:0.3rem;}
+.pb-header p{font-size:0.85rem;color:var(--muted);}
+.pb-scenarios{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.8rem;justify-content:center;}
+.scene-btn{padding:7px 15px;border-radius:2px;font-size:0.74rem;letter-spacing:0.05em;background:transparent;
+  border:1px solid var(--accent-dim);color:var(--muted);cursor:pointer;transition:all .15s;}
+.scene-btn:hover,.scene-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+.dialogue-box{background:var(--navy-card);border:1px solid var(--accent-dim);border-radius:4px;padding:1.8rem;margin-bottom:1.4rem;}
+.scene-title{font-size:0.66rem;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem;}
+.scene-context{font-size:0.82rem;color:var(--muted);margin-bottom:1.4rem;font-style:italic;border-left:2px solid var(--accent-dim);padding-left:10px;}
+.scene-context .ru-text{margin-top:0.3rem;}
+.line{display:flex;gap:0.9rem;margin-bottom:1.1rem;align-items:flex-start;}
+.line-who{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;padding:4px 7px;border-radius:2px;
+  white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.line-who.guest{background:rgba(106,133,160,0.15);color:var(--muted);}
+.line-who.staff{background:var(--accent-soft);color:var(--accent);}
+.line-text{font-size:0.92rem;line-height:1.6;}
+.line-text .highlight{background:var(--accent-soft);color:var(--accent);padding:1px 4px;border-radius:2px;}
+.line-ru{font-size:0.82rem;color:var(--muted);margin-top:0.25rem;line-height:1.5;}
+.key-phrases{background:var(--navy-mid);border:1px solid var(--accent-dim);border-radius:4px;padding:1.4rem 1.5rem;}
+.key-phrases h4{font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+.phrase-list{display:flex;flex-direction:column;gap:1rem;}
+.phrase-item{border-left:2px solid var(--accent-dim);padding-left:12px;}
+.phrase-en{font-size:0.9rem;color:var(--ice);}
+.phrase-ru{font-size:0.82rem;color:var(--accent);margin-top:2px;}
+.phrase-tip{font-size:0.8rem;color:var(--muted);margin-top:4px;line-height:1.45;}
+
+@media(max-width:600px){
+  nav{padding:0 0.9rem;} .nav-logo{font-size:1.05rem;} .nav-tab{padding:0 0.65rem;font-size:0.66rem;}
+  .ru-toggle{margin-left:0.6rem;padding:5px 9px;} .hero{padding:3rem 1.2rem 1.5rem;}
+  .modules-grid,.deptmenu-wrap{padding-left:1rem;padding-right:1rem;}
+}
+/* phones */
+@media(max-width:520px){
+  nav{height:54px;padding:0 0.7rem;}
+  .nav-logo{font-size:0.98rem;flex-shrink:0;}
+  .nav-logo span{display:none;}              /* show "ALA" mark, hide word to save space */
+  .nav-dept{display:none !important;}         /* role name shown on the page, not in the bar */
+  .nav-tab{height:54px;padding:0 0.5rem;font-size:0.6rem;letter-spacing:0.03em;}
+  .ru-toggle{margin-left:0.4rem;padding:5px 8px;font-size:0.66rem;}
+  .section{min-height:calc(100vh - 54px);}
+  .hero{padding:2.4rem 1.1rem 1.2rem;}
+  .hero h1{font-size:1.9rem;}
+  .hero-eyebrow{font-size:0.6rem;}
+  .hero-sub{font-size:0.88rem;}
+  .modules-grid{grid-template-columns:1fr;gap:0.9rem;}
+  .deptmenu-grid{grid-template-columns:1fr;}
+  .flip-card{min-height:300px;}
+  .flip-face{padding:2rem 1.3rem;}
+  .flip-word{font-size:1.7rem;}
+  .fc-controls{gap:0.5rem;}
+  .btn{padding:9px 16px;font-size:0.76rem;}
+  .quiz-q-box{padding:1.3rem;}
+  .line{gap:0.6rem;}
+  .key-phrases{padding:1.2rem 1.1rem;}
+}
+
+/* ── AUTH / CABINET / ADMIN ── */
+.auth-wrap{max-width:440px;margin:0 auto;padding:3.5rem 1.5rem;}
+.auth-card{background:var(--navy-card);border:1px solid var(--accent-dim);border-radius:8px;padding:2.2rem 1.8rem;}
+.auth-card h2{font-family:'Playfair Display',serif;font-size:1.7rem;text-align:center;margin-bottom:0.3rem;color:var(--gold);}
+.auth-sub{text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:1.8rem;}
+.auth-field{margin-bottom:1rem;}
+.auth-field label{display:block;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.4rem;}
+.auth-input{width:100%;padding:0.8rem 1rem;border-radius:5px;background:var(--navy);border:1px solid var(--accent-dim);color:var(--ice);font-size:0.95rem;font-family:inherit;}
+.auth-input:focus{outline:none;border-color:var(--accent);}
+.auth-btn{width:100%;padding:0.85rem;border:none;border-radius:5px;background:var(--accent);color:var(--navy);font-weight:600;font-size:0.9rem;cursor:pointer;margin-top:0.5rem;}
+.auth-btn:hover{filter:brightness(1.1);}
+.auth-btn:disabled{opacity:0.6;cursor:default;}
+.auth-link{display:block;text-align:center;margin-top:1.2rem;font-size:0.78rem;color:var(--muted);cursor:pointer;text-decoration:underline;}
+.auth-err{color:#e08070;font-size:0.8rem;text-align:center;margin-top:0.6rem;min-height:1.1em;}
+.nav-user{margin-left:1rem;padding:4px 12px;border-radius:20px;font-size:0.74rem;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-dim);cursor:pointer;white-space:nowrap;display:none;}
+.nav-user.show{display:inline-block;}
+.cab-wrap{max-width:840px;margin:0 auto;padding:2.5rem 1.5rem;}
+.cab-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.8rem;}
+.cab-head h2{font-family:'Playfair Display',serif;font-size:1.7rem;}
+.cab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.cab-stat{background:var(--navy-card);border:1px solid var(--accent-dim);border-radius:6px;padding:1.2rem;text-align:center;}
+.cab-stat .num{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--accent);}
+.cab-stat .lbl{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;}
+.cab-section-title{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin:1.5rem 0 0.8rem;}
+.table-wrap{overflow-x:auto;}
+.cab-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+.cab-table th,.cab-table td{text-align:left;padding:0.7rem 0.8rem;border-bottom:1px solid var(--accent-dim);white-space:nowrap;}
+.cab-table th{font-size:0.66rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);}
+.sync-badge{font-size:0.68rem;color:var(--muted);text-align:center;margin-top:0.6rem;min-height:1.2em;}
+</style>
+</head>
+<body class="show-ru">
+
+<nav>
+  <div class="nav-logo" onclick="goHome()">✈ ALA <span>English</span></div>
+  <div class="nav-dept" id="navDept"></div>
+  <div class="nav-user" id="navUser" onclick="goCabinet()"></div>
+  <div class="nav-tabs">
+    <div class="nav-tab" data-view="menu" onclick="goTo('menu')">Modules</div>
+    <div class="nav-tab" data-view="flashcards" onclick="goTo('flashcards')">Flashcards</div>
+    <div class="nav-tab" data-view="quiz" onclick="goTo('quiz')">Quiz</div>
+    <div class="nav-tab" data-view="phrasebook" onclick="goTo('phrasebook')">Phrasebook</div>
+  </div>
+  <div class="ru-toggle" id="ruToggle" onclick="toggleRu()">RU ✓</div>
+</nav>
+
+<!-- LOGIN -->
+<div class="section active" id="login">
+  <div class="auth-wrap"><div class="auth-card">
+    <h2>✈ ALA English</h2>
+    <div class="auth-sub">Enter your name to start · <span class="ru-inline">Введите имя, чтобы начать</span></div>
+    <div class="auth-field"><label>First name · <span class="ru-inline">Имя</span></label><input class="auth-input" id="inpFirst" autocomplete="given-name"></div>
+    <div class="auth-field"><label>Last name · <span class="ru-inline">Фамилия</span></label><input class="auth-input" id="inpLast" autocomplete="family-name"></div>
+    <button class="auth-btn" id="loginBtn" onclick="doLogin()">Start · <span class="ru-inline">Начать</span></button>
+    <div class="auth-err" id="loginErr"></div>
+    <div class="auth-link" onclick="openAdminLogin()">Admin access · Вход для админа</div>
+  </div></div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="section" id="adminlogin">
+  <div class="auth-wrap"><div class="auth-card">
+    <h2>Admin</h2>
+    <div class="auth-sub">Enter admin code · <span class="ru-inline">Введите код администратора</span></div>
+    <div class="auth-field"><label>Access code · <span class="ru-inline">Код доступа</span></label><input class="auth-input" id="inpCode" type="password"></div>
+    <button class="auth-btn" id="adminBtn" onclick="doAdminLogin()">Enter · <span class="ru-inline">Войти</span></button>
+    <div class="auth-err" id="adminErr"></div>
+    <div class="auth-link" onclick="goHome()">← Back · Назад</div>
+  </div></div>
+</div>
+
+<!-- CABINET -->
+<div class="section" id="cabinet">
+  <div class="cab-wrap">
+    <div class="cab-head"><h2 id="cabName">My Progress</h2>
+      <button class="btn btn-ghost" onclick="doLogout()">Log out · <span class="ru-inline">Выйти</span></button></div>
+    <div class="cab-grid" id="cabStats"></div>
+    <div class="cab-section-title">By role · <span class="ru-inline">По ролям</span></div>
+    <div class="table-wrap"><table class="cab-table" id="cabTable"></table></div>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="section" id="admin">
+  <div class="cab-wrap">
+    <div class="cab-head"><h2>Admin — All staff · <span class="ru-inline">Все сотрудники</span></h2>
+      <button class="btn btn-ghost" onclick="goHome()">← Back · Назад</button></div>
+    <div class="cab-grid" id="admStats"></div>
+    <div class="table-wrap"><table class="cab-table" id="admTable"></table></div>
+  </div>
+</div>
+
+<div class="section" id="home">
+  <div class="hero">
+    <div class="hero-eyebrow">Almaty International Airport</div>
+    <h1>English on the <em>Floor</em></h1>
+    <p class="hero-sub">
+      Everyday English for our bar, café and shop — the real words and phrases you use with guests during a shift.
+      <span class="ru-text">Повседневный английский для бара, кофейни и магазина — реальные слова и фразы, которые вы используете с гостями в смену.</span>
+    </p>
+  </div>
+  <div class="dept-prompt">Choose your role · <span class="ru-inline">Выберите вашу должность</span></div>
+  <div class="modules-grid" id="deptGrid"></div>
+</div>
+
+<div class="section" id="menu">
+  <div class="deptmenu-wrap">
+    <div class="deptmenu-head">
+      <div class="icon" id="menuIcon">🍸</div>
+      <h2 id="menuTitle">—</h2>
+      <div class="ru-text" id="menuTitleRu">—</div>
+    </div>
+    <div class="deptmenu-grid">
+      <div class="menu-tile" onclick="goTo('flashcards')"><div class="mt-icon">🗂️</div><h3>Flashcards</h3><p>Vocabulary <span class="ru-inline">· Слова</span></p></div>
+      <div class="menu-tile" onclick="goTo('quiz')"><div class="mt-icon">✅</div><h3>Quiz</h3><p>Test yourself <span class="ru-inline">· Проверь себя</span></p></div>
+      <div class="menu-tile" onclick="goTo('phrasebook')"><div class="mt-icon">💬</div><h3>Phrasebook</h3><p>Real dialogues <span class="ru-inline">· Диалоги</span></p></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="flashcards">
+  <div class="fc-wrapper">
+    <div class="fc-header"><h2>Flashcards</h2><p class="fc-counter" id="fcCounter">—</p></div>
+    <div class="fc-categories" id="fcCats"></div>
+    <div class="flip-scene" onclick="flipCard()">
+      <div class="flip-card" id="flipCard">
+        <div class="flip-face flip-front">
+          <div class="flip-face-label">Word · <span class="ru-inline">Слово</span></div>
+          <div class="flip-word" id="fcWord">—</div>
+          <div class="flip-ru-word ru-text" id="fcRu">—</div>
+          <div class="flip-phonetic" id="fcPhonetic">—</div>
+          <button class="speak-btn" onclick="speakCard(event)" title="Listen / Прослушать">🔊 Listen</button>
+          <div class="flip-category" id="fcCat">—</div>
+          <div class="flip-hint">Tap to flip · <span class="ru-inline">Нажми, чтобы перевернуть</span></div>
+        </div>
+        <div class="flip-face flip-back">
+          <div class="flip-face-label">Meaning · <span class="ru-inline">Значение</span></div>
+          <div class="flip-definition" id="fcDef">—</div>
+          <div class="flip-def-ru ru-text" id="fcDefRu">—</div>
+          <div class="flip-example" id="fcEx">—</div>
+          <button class="speak-btn" onclick="speakExample(event)" title="Listen / Прослушать">🔊 Listen example</button>
+          <div class="flip-example-ru ru-text" id="fcExRu">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="btn btn-ghost" onclick="prevCard()">←</button>
+      <button class="btn btn-danger" onclick="markCard('practice')">Practice ↻</button>
+      <button class="btn btn-success" onclick="markCard('known')">Know it ✓</button>
+      <button class="btn btn-ghost" onclick="nextCard()">→</button>
+    </div>
+    <div class="fc-progress-row" id="fcDots"></div>
+  </div>
+</div>
+
+<div class="section" id="quiz">
+  <div class="quiz-wrapper">
+    <div class="quiz-header"><h2>Quiz</h2></div>
+    <div class="quiz-scoreboard">
+      <div class="score-item"><div class="score-val" id="qCorrect">0</div><div class="score-label">Correct</div></div>
+      <div class="score-item"><div class="score-val" id="qQ">1</div><div class="score-label">Question</div></div>
+      <div class="score-item"><div class="score-val" id="qTotal">0</div><div class="score-label">Total</div></div>
+    </div>
+    <div id="quizActive">
+      <div class="quiz-q-box"><div class="quiz-q-num" id="qNum">—</div><div class="quiz-q-text" id="qText">—</div><div class="quiz-q-ru ru-text" id="qTextRu">—</div></div>
+      <div class="quiz-options" id="qOpts"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <div class="quiz-nav"><button class="btn btn-primary" id="qNext" onclick="nextQuestion()" style="display:none">Next →</button></div>
+    </div>
+    <div class="quiz-results" id="quizResults">
+      <div class="result-ring"><div class="result-score-big" id="finalScore">0</div><div class="result-score-max" id="finalMax">/0</div></div>
+      <div class="result-msg" id="resultMsg">—</div><div class="result-sub" id="resultSub">—</div>
+      <button class="btn btn-primary" onclick="restartQuiz()">Try Again · <span class="ru-inline">Ещё раз</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="phrasebook">
+  <div class="pb-wrapper">
+    <div class="pb-header"><h2>Phrasebook</h2><p>Real conversations · <span class="ru-inline">Реальные диалоги</span></p></div>
+    <div class="pb-scenarios" id="pbScenes"></div>
+    <div class="dialogue-box" id="dialogueBox"></div>
+    <div class="key-phrases" id="keyPhrases"></div>
+  </div>
+</div>
+
+<script type="module">
+// ════════════════════ FIREBASE ════════════════════
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion,
+  collection, getDocs, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDr4m_3hy5v32YLFAlB0uy9ub-JHkDlKk0",
+  authDomain: "english-ala.firebaseapp.com",
+  projectId: "english-ala",
+  storageBucket: "english-ala.firebasestorage.app",
+  messagingSenderId: "543190180901",
+  appId: "1:543190180901:web:dccd25e63f815420860bcc",
+  measurementId: "G-MGQSSX17Y7"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
+// ════════════════════ DATA ════════════════════
+const departments = {
+  hostess: {
+    name:'Hostess', nameRu:'Хостес', icon:'🛎️', accent:'#C57A8A',
+    cards:[
+      {word:'To welcome', ru:'Приветствовать', phonetic:'/tə ˈwelkəm/', cat:'greeting', def:'To greet a guest kindly when they arrive.', defRu:'Тепло встречать гостя при входе.', ex:'"Welcome! Please, come in."', exRu:'«Добро пожаловать! Проходите, пожалуйста.»'},
+      {word:'Good evening', ru:'Добрый вечер', phonetic:'/ɡʊd ˈiːvnɪŋ/', cat:'greeting', def:'A polite greeting used in the evening.', defRu:'Вежливое приветствие вечером.', ex:'"Good evening, welcome to our restaurant!"', exRu:'«Добрый вечер, добро пожаловать в наш ресторан!»'},
+      {word:'How many of you?', ru:'Сколько вас?', phonetic:'/haʊ ˈmeni/', cat:'greeting', def:'Asking how many people are in the group.', defRu:'Спрашиваем, сколько человек в компании.', ex:'"How many of you?"', exRu:'«Сколько вас?»'},
+      {word:'Have a seat', ru:'Присаживайтесь', phonetic:'/hæv ə siːt/', cat:'seating', def:'A polite way to ask a guest to sit.', defRu:'Вежливо предложить гостю сесть.', ex:'"Please, have a seat here."', exRu:'«Пожалуйста, присаживайтесь здесь.»'},
+      {word:'This way, please', ru:'Сюда, пожалуйста', phonetic:'/ðɪs weɪ/', cat:'seating', def:'Used to guide a guest to a table.', defRu:'Говорят, направляя гостя к столу.', ex:'"This way, please, follow me."', exRu:'«Сюда, пожалуйста, следуйте за мной.»'},
+      {word:'A free table', ru:'Свободный столик', phonetic:'/ə friː ˈteɪbl/', cat:'seating', def:'A table that is empty and ready.', defRu:'Пустой, готовый столик.', ex:'"We have a free table for you."', exRu:'«У нас есть для вас свободный столик.»'},
+      {word:'Here is the menu', ru:'Вот меню', phonetic:'/hɪər ɪz ðə ˈmenjuː/', cat:'menu', def:'Said when handing the menu to a guest.', defRu:'Говорят, подавая гостю меню.', ex:'"Here is the menu, please."', exRu:'«Вот меню, пожалуйста.»'},
+      {word:'To choose', ru:'Выбрать', phonetic:'/tə tʃuːz/', cat:'menu', def:'To pick what you want from the menu.', defRu:'Выбрать из меню то, что хочешь.', ex:'"Please, take your time to choose."', exRu:'«Пожалуйста, не спешите с выбором.»'},
+      {word:'The kitchen', ru:'Кухня', phonetic:'/ðə ˈkɪtʃɪn/', cat:'menu', def:'Where the food is cooked.', defRu:'Место, где готовят еду.', ex:'"The kitchen is a little busy now."', exRu:'«Кухня сейчас немного загружена.»'},
+      {word:'To take about…', ru:'Занимать примерно…', phonetic:'/teɪk əˈbaʊt/', cat:'menu', def:'To need a certain amount of time.', defRu:'Требовать определённое время.', ex:'"The food takes about 20 minutes."', exRu:'«Еда готовится примерно 20 минут.»'},
+      {word:'Ready', ru:'Готово', phonetic:'/ˈredi/', cat:'menu', def:'Finished and ready to serve.', defRu:'Готово и можно подавать.', ex:'"Your order will be ready soon."', exRu:'«Ваш заказ скоро будет готов.»'},
+      {word:'Tenge or card only', ru:'Только тенге или карта', phonetic:'/ˈtenɡeɪ ɔːr kɑːrd/', cat:'payment', def:'We take Kazakh tenge or Visa/Mastercard, but not US dollars.', defRu:'Принимаем тенге или карту Visa/Mastercard, но не доллары.', ex:'"We accept tenge or card — Visa or Mastercard. Sorry, no US dollars."', exRu:'«Мы принимаем тенге или карту — Visa или Mastercard. Доллары, к сожалению, не принимаем.»'},
+      {word:'Enjoy your meal', ru:'Приятного аппетита', phonetic:'/ɪnˈdʒɔɪ jɔːr miːl/', cat:'questions', def:'A polite wish when food is served.', defRu:'Вежливое пожелание, когда подают еду.', ex:'"Enjoy your meal!"', exRu:'«Приятного аппетита!»'},
+      {word:'The restroom', ru:'Туалет', phonetic:'/ðə ˈrestruːm/', cat:'questions', def:'The toilet is in the airport, down the corridor.', defRu:'Туалет находится в аэропорту, по коридору.', ex:'"The restroom is down the corridor, on the right."', exRu:'«Туалет — прямо по коридору и направо.»'},
+      {word:'Airport Wi-Fi', ru:'Wi-Fi аэропорта', phonetic:'/ˈeərpɔːrt ˈwaɪfaɪ/', cat:'questions', def:'Free airport Wi-Fi; connect with a passport code or phone number.', defRu:'Бесплатный Wi-Fi аэропорта; подключение по коду из паспорта или номеру телефона.', ex:'"You can connect to the airport Wi-Fi with your passport or phone number."', exRu:'«К Wi-Fi аэропорта можно подключиться по коду из паспорта или по номеру телефона.»'},
+    ],
+    quiz:[
+      {q:'"Have a seat" means…', qRu:'«Have a seat» значит…', opts:['Please wait','Please sit down','Pay now','Follow me'], ans:1, tip:'A polite way to ask a guest to sit.', tipRu:'Вежливо предложить гостю сесть.'},
+      {q:'You say "Enjoy your meal" when…', qRu:'«Enjoy your meal» говорят, когда…', opts:['The guest pays','The food is served','The guest leaves','You take the order'], ans:1, tip:'Said as you serve the food.', tipRu:'Говорят, когда подаёте еду.'},
+      {q:'"The food takes about 20 minutes" — "about" means…', qRu:'«About 20 minutes» — «about» значит…', opts:['Exactly','Approximately','Less than','More than'], ans:1, tip:'About / around = approximately.', tipRu:'About / around — примерно.'},
+      {q:'"We accept tenge or card" — a guest CANNOT pay with…', qRu:'«Tenge or card» — гость НЕ может платить…', opts:['A Visa card','Kazakh tenge','US dollars','A Mastercard'], ans:2, tip:'Tenge or card only — no US dollars.', tipRu:'Только тенге или карта — доллары не принимаем.'},
+      {q:'"This way, please" is used to…', qRu:'«This way, please» используют, чтобы…', opts:['Give the bill','Guide the guest','Take a coat','Pour water'], ans:1, tip:'Say it while leading the guest to a table.', tipRu:'Говорите, ведя гостя к столу.'},
+      {q:'"How many of you?" asks about…', qRu:'«How many of you?» спрашивает про…', opts:['The price','The number of guests','The time','The order'], ans:1, tip:'You ask this to seat the right table.', tipRu:'Спрашиваете, чтобы выбрать нужный столик.'},
+      {q:'"To welcome" a guest means to…', qRu:'«To welcome» гостя значит…', opts:['Greet them kindly','Take their order','Bring the bill','Clear the table'], ans:0, tip:'Welcome = greet warmly at the door.', tipRu:'Welcome — тепло встретить у входа.'},
+      {q:'"The kitchen" is where…', qRu:'«The kitchen» — это место, где…', opts:['Guests pay','The food is cooked','Coats are kept','Guests wait'], ans:1, tip:'The kitchen = where food is cooked.', tipRu:'Кухня — где готовят еду.'},
+      {q:'A guest asks for the restroom. You say…', qRu:'Гость спрашивает туалет. Вы говорите…', opts:['We have no restroom','Down the corridor, on the right','It is closed','Ask the kitchen'], ans:1, tip:'The restroom is in the airport corridor.', tipRu:'Туалет — в коридоре аэропорта.'},
+      {q:'How can a guest get internet?', qRu:'Как гостю выйти в интернет?', opts:['We have no Wi-Fi','Airport Wi-Fi with passport or phone number','Only by cable','From the kitchen'], ans:1, tip:'Connect to airport Wi-Fi with passport / phone number.', tipRu:'Wi-Fi аэропорта по паспорту или номеру телефона.'},
+      {q:'"Here is the menu" — you say this while…', qRu:'«Here is the menu» говорят, когда…', opts:['Taking the plate','Handing the menu','Bringing the bill','Cleaning the table'], ans:1, tip:'Said as you give the menu.', tipRu:'Говорят, подавая меню.'},
+      {q:'"A free table" is a table that is…', qRu:'«A free table» — столик, который…', opts:['Empty and ready','Reserved','Being cleaned','At no cost'], ans:0, tip:'Free = empty and ready to use.', tipRu:'Free — пустой и готовый.'},
+      {q:'Adding "please" to a phrase makes it…', qRu:'Слово «please» делает фразу…', opts:['Shorter','More polite','Louder','Faster'], ans:1, tip:'"Please" adds respect and politeness.', tipRu:'«Please» добавляет уважение и вежливость.'},
+    ],
+    scenes:[
+      {title:'Welcoming & Seating', titleRu:'Встреча и посадка', icon:'🤝',
+       context:'A guest arrives. You greet them, seat them, and give the menu.', contextRu:'Приходит гость. Вы встречаете, усаживаете и даёте меню.',
+       lines:[
+         {who:'staff', text:'<span class="highlight">Good evening, welcome! How many of you?</span>', ru:'Добрый вечер, добро пожаловать! Сколько вас?'},
+         {who:'guest', text:'Just two of us.', ru:'Нас двое.'},
+         {who:'staff', text:'<span class="highlight">This way, please. Have a seat here.</span>', ru:'Сюда, пожалуйста. Присаживайтесь здесь.'},
+         {who:'staff', text:'<span class="highlight">Here is the menu, please. Take your time to choose.</span>', ru:'Вот меню, пожалуйста. Не спешите с выбором.'},
+         {who:'guest', text:'Thank you. How long does the food take?', ru:'Спасибо. Сколько готовится еда?'},
+         {who:'staff', text:'<span class="highlight">The kitchen takes about 20 minutes. Enjoy!</span>', ru:'Кухня готовит примерно 20 минут. Приятного отдыха!'},
+       ],
+       phrases:[
+         {en:'Welcome! How many of you?', ru:'Добро пожаловать! Сколько вас?', tip:'Тёплое приветствие + число гостей в одной фразе.'},
+         {en:'This way, please. Have a seat.', ru:'Сюда, пожалуйста. Присаживайтесь.', tip:'Ведите гостя, потом предложите сесть. «Please» добавляет вежливость.'},
+         {en:'The kitchen takes about 20 minutes.', ru:'Кухня готовит примерно 20 минут.', tip:'Заранее назовите время — гость не будет нервничать.'},
+       ]},
+      {title:'Payment & Guest Questions', titleRu:'Оплата и вопросы гостя', icon:'💳',
+       context:'You explain payment and answer common questions.', contextRu:'Вы объясняете оплату и отвечаете на частые вопросы.',
+       lines:[
+         {who:'staff', text:'Just so you know — <span class="highlight">we accept tenge or card, Visa or Mastercard. Sorry, no US dollars.</span>', ru:'Сразу скажу — принимаем тенге или карту, Visa или Mastercard. Доллары, к сожалению, нет.'},
+         {who:'guest', text:'No problem. Where is the restroom?', ru:'Без проблем. Где туалет?'},
+         {who:'staff', text:'<span class="highlight">Down the corridor and to the right.</span>', ru:'Прямо по коридору и направо.'},
+         {who:'guest', text:'And the Wi-Fi?', ru:'А Wi-Fi?'},
+         {who:'staff', text:'<span class="highlight">Use the airport Wi-Fi — connect with your passport or phone number. Enjoy your meal!</span>', ru:'Есть Wi-Fi аэропорта — подключитесь по паспорту или номеру телефона. Приятного аппетита!'},
+       ],
+       phrases:[
+         {en:'We accept tenge or card, no US dollars.', ru:'Принимаем тенге или карту, доллары нет.', tip:'Скажите заранее, чтобы не было сюрприза на кассе.'},
+         {en:'Down the corridor and to the right.', ru:'Прямо по коридору и направо.', tip:'Туалет в аэропорту — показывайте направление рукой.'},
+         {en:'Connect with your passport or phone number.', ru:'Подключитесь по паспорту или номеру телефона.', tip:'Так гости выходят в Wi-Fi аэропорта.'},
+       ]},
+    ]
+  },
+
+  bartender: {
+    name:'Bartender', nameRu:'Бармен', icon:'🍺', accent:'#C9A050',
+    cards:[
+      {word:'Draft beer (on tap)', ru:'Разливное пиво', phonetic:'/drɑːft bɪər/', cat:'drinks', def:'Beer poured from a tap, not a bottle.', defRu:'Пиво из крана, не из бутылки.', ex:'"Two draft beers, please."', exRu:'«Два разливных пива, пожалуйста.»'},
+      {word:'Bottle / can', ru:'Бутылка / банка', phonetic:'/ˈbɒtl / kæn/', cat:'drinks', def:'Beer in a bottle or a can.', defRu:'Пиво в бутылке или банке.', ex:'"Bottle or can?"', exRu:'«Бутылку или банку?»'},
+      {word:'Soft drink', ru:'Безалкогольный напиток', phonetic:'/sɒft drɪŋk/', cat:'drinks', def:'A non-alcoholic drink like cola or juice.', defRu:'Напиток без алкоголя — кола, сок.', ex:'"Any soft drinks for the kids?"', exRu:'«Какие-нибудь безалкогольные для детей?»'},
+      {word:'With ice / no ice', ru:'Со льдом / без льда', phonetic:'/wɪð aɪs/', cat:'drinks', def:'With or without ice cubes.', defRu:'С кубиками льда или без.', ex:'"Cola with ice or no ice?"', exRu:'«Колу со льдом или без?»'},
+      {word:'A shot', ru:'Стопка / шот', phonetic:'/ə ʃɒt/', cat:'drinks', def:'A small glass of strong spirit.', defRu:'Маленькая порция крепкого алкоголя.', ex:'"Two shots of tequila, please."', exRu:'«Два шота текилы, пожалуйста.»'},
+      {word:'A double', ru:'Двойная порция', phonetic:'/ə ˈdʌbl/', cat:'drinks', def:'Two measures of spirit in one glass.', defRu:'Две порции крепкого в одном стакане.', ex:'"Make it a double, please."', exRu:'«Двойную, пожалуйста.»'},
+      {word:'Another round', ru:'Ещё по одной', phonetic:'/əˈnʌðər raʊnd/', cat:'serving', def:'The same drinks again for the whole table.', defRu:'Те же напитки ещё раз на весь стол.', ex:'"Another round for the table?"', exRu:'«Ещё по одной на стол?»'},
+      {word:'We are changing shifts', ru:'У нас пересменка', phonetic:'/ˈtʃeɪndʒɪŋ ʃɪfts/', cat:'serving', def:'A short staff change; the airport bar is open 24/7.', defRu:'Короткая пересменка; бар в аэропорту работает 24/7.', ex:'"We are changing shifts — could you wait a couple of minutes, please? We are open 24/7."', exRu:'«У нас пересменка — подождите пару минут, пожалуйста. Мы работаем 24/7.»'},
+      {word:'The game / the match', ru:'Игра / матч', phonetic:'/ðə ɡeɪm/', cat:'sports', def:'The sports event shown on the TV.', defRu:'Спортивное событие на экране.', ex:'"The game starts at nine."', exRu:'«Матч начинается в девять.»'},
+      {word:'Bar snacks', ru:'Закуски к пиву', phonetic:'/bɑːr snæks/', cat:'extras', def:'Small food like nuts or chips at the bar.', defRu:'Лёгкая еда — орешки, чипсы — к бару.', ex:'"Any bar snacks with that?"', exRu:'«Закуски к этому?»'},
+      {word:'A straw', ru:'Трубочка', phonetic:'/ə strɔː/', cat:'extras', def:'A thin tube for drinking.', defRu:'Тонкая трубочка для питья.', ex:'"Do you need a straw?"', exRu:'«Вам нужна трубочка?»'},
+      {word:'A napkin', ru:'Салфетка', phonetic:'/ə ˈnæpkɪn/', cat:'extras', def:'Paper to clean hands or the bar.', defRu:'Бумага, чтобы вытереть руки или барную стойку.', ex:'"Here are some napkins."', exRu:'«Вот салфетки.»'},
+      {word:'At the till / cash desk', ru:'На кассе', phonetic:'/ət ðə tɪl/', cat:'payment', def:'The place where guests pay.', defRu:'Место, где гости оплачивают.', ex:'"You can pay at the till, by card."', exRu:'«Оплатить можно на кассе, картой.»'},
+    ],
+    quiz:[
+      {q:'"Draft beer" / "on tap" is…', qRu:'«Draft beer» / «on tap» — это…', opts:['Beer from a bottle','Beer from a tap','Warm beer','Non-alcoholic beer'], ans:1, tip:'Draft = poured from a tap.', tipRu:'Draft — наливают из крана.'},
+      {q:'"Another round" means…', qRu:'«Another round» значит…', opts:['Pay the bill','The same drinks again for everyone','A bigger glass','A new menu'], ans:1, tip:'A round = drinks for the whole group, again.', tipRu:'Round — напитки на всю компанию, ещё раз.'},
+      {q:'A "soft drink" is…', qRu:'«Soft drink» — это…', opts:['A strong cocktail','A non-alcoholic drink','A hot drink','A beer'], ans:1, tip:'Cola, juice, lemonade — no alcohol.', tipRu:'Кола, сок, лимонад — без алкоголя.'},
+      {q:'"A double" means…', qRu:'«A double» значит…', opts:['Two glasses','Two measures of spirit','A large beer','Two guests'], ans:1, tip:'Double = two shots of spirit in one glass.', tipRu:'Double — две порции крепкого в одном стакане.'},
+      {q:'"With ice or no ice?" asks about…', qRu:'«With ice or no ice?» про…', opts:['The glass size','Whether to add ice','The price','The brand'], ans:1, tip:'You ask if the guest wants ice cubes.', tipRu:'Спрашиваете, класть ли лёд.'},
+      {q:'"A shot" is…', qRu:'«A shot» — это…', opts:['A large beer','A small glass of strong spirit','A soft drink','A snack'], ans:1, tip:'A shot = one small measure of spirit.', tipRu:'Shot — одна маленькая порция крепкого.'},
+      {q:'"Bottle or can?" asks about…', qRu:'«Bottle or can?» про…', opts:['The beer container','The payment','The snack','The TV'], ans:0, tip:'You ask how the guest wants the beer.', tipRu:'Спрашиваете, в чём подать пиво.'},
+      {q:'"We are changing shifts" means…', qRu:'«We are changing shifts» значит…', opts:['The bar is closing forever','Staff are swapping — a short wait','Free drinks','Last order'], ans:1, tip:'A short staff change, please wait a moment.', tipRu:'Короткая пересменка, нужно чуть подождать.'},
+      {q:'The airport bar is open…', qRu:'Бар в аэропорту работает…', opts:['Only mornings','9 to 5','24/7 (all day, every day)','Weekends only'], ans:2, tip:'24/7 = all day, every day.', tipRu:'24/7 — круглосуточно и без выходных.'},
+      {q:'"The match" is…', qRu:'«The match» — это…', opts:['The price','The sports event on TV','A type of beer','A snack'], ans:1, tip:'The game / match on the screen.', tipRu:'Игра / матч на экране.'},
+      {q:'"Bar snacks" are…', qRu:'«Bar snacks» — это…', opts:['Big meals','Small food like nuts or chips','Cocktails','Desserts'], ans:1, tip:'Light food to go with drinks.', tipRu:'Лёгкая еда к напиткам.'},
+      {q:'"At the till" — the till is…', qRu:'«At the till» — till это…', opts:['The kitchen','The place to pay','The exit','The tap'], ans:1, tip:'Till / cash desk = where guests pay.', tipRu:'Till / cash desk — касса.'},
+      {q:'"A straw" is…', qRu:'«A straw» — это…', opts:['A napkin','A thin tube for drinking','A glass','A snack'], ans:1, tip:'A straw = a thin tube to drink through.', tipRu:'Straw — трубочка для питья.'},
+    ],
+    scenes:[
+      {title:'Ordering Drinks · The Game', titleRu:'Заказ напитков · матч', icon:'🍺',
+       context:'Guests order drinks and ask about the match on TV.', contextRu:'Гости заказывают напитки и спрашивают про матч на ТВ.',
+       lines:[
+         {who:'guest', text:'Two draft beers, please.', ru:'Два разливных пива, пожалуйста.'},
+         {who:'staff', text:'<span class="highlight">Sure, coming up. Any soft drinks too?</span>', ru:'Конечно, сейчас будет. Ещё безалкогольные?'},
+         {who:'guest', text:'One cola, please. With ice.', ru:'Одну колу, пожалуйста. Со льдом.'},
+         {who:'staff', text:'<span class="highlight">Any bar snacks — nuts or chips?</span>', ru:'Закуски — орешки или чипсы?'},
+         {who:'guest', text:'Just nuts, thanks. Is the match on?', ru:'Только орешки, спасибо. Матч идёт?'},
+         {who:'staff', text:'<span class="highlight">Yes, it is on the big screen. Enjoy!</span>', ru:'Да, на большом экране. Приятного отдыха!'},
+       ],
+       phrases:[
+         {en:'Bottle or can?', ru:'Бутылку или банку?', tip:'Уточните, в чём подать пиво.'},
+         {en:'With ice or no ice?', ru:'Со льдом или без?', tip:'Частый вопрос про напитки.'},
+         {en:'Any bar snacks?', ru:'Закуски к пиву?', tip:'Предложите допы — это нормально и помогает продажам.'},
+       ]},
+      {title:'Shift Change · Payment', titleRu:'Пересменка · оплата', icon:'🕙',
+       context:'The staff are changing shifts, then the guest pays.', contextRu:'Идёт пересменка, затем гость оплачивает.',
+       lines:[
+         {who:'guest', text:'Can I order another round?', ru:'Можно ещё по одной?'},
+         {who:'staff', text:'<span class="highlight">Of course. Just so you know, we are changing shifts — could you wait a couple of minutes, please? We are open 24/7.</span>', ru:'Конечно. Сразу скажу, у нас пересменка — подождите пару минут, пожалуйста. Мы работаем 24/7.'},
+         {who:'guest', text:'No problem. And the bill after.', ru:'Без проблем. И счёт потом.'},
+         {who:'staff', text:'<span class="highlight">Sure. You can pay at the till, by card.</span>', ru:'Конечно. Оплатить можно на кассе, картой.'},
+       ],
+       phrases:[
+         {en:'We are changing shifts, please wait a couple of minutes.', ru:'У нас пересменка, подождите пару минут, пожалуйста.', tip:'Вежливо объясните паузу.'},
+         {en:'We are open 24/7.', ru:'Мы работаем 24/7.', tip:'Успокойте гостя — бар работает круглосуточно.'},
+         {en:'You can pay at the till, by card.', ru:'Оплатить можно на кассе, картой.', tip:'Подскажите, где и чем платить.'},
+       ]},
+    ]
+  },
+
+  barista: {
+    name:'Barista', nameRu:'Бариста', icon:'☕', accent:'#A87C4F',
+    cards:[
+      {word:'Hot or cold milk?', ru:'Молоко тёплое или холодное?', phonetic:'/hɒt ɔːr koʊld mɪlk/', cat:'making', def:'Asking whether to heat the milk or add it cold.', defRu:'Спрашиваем, нагреть молоко или добавить холодное.', ex:'"Would you like the milk heated for your americano, or cold?"', exRu:'«Вам нагреть молоко для американо или добавить холодное?»'},
+      {word:'Extra hot', ru:'Очень горячий', phonetic:'/ˈekstrə hɒt/', cat:'making', def:'Hotter than usual, by request.', defRu:'Горячее обычного, по просьбе.', ex:'"Would you like it extra hot?"', exRu:'«Сделать очень горячим?»'},
+      {word:'Lukewarm', ru:'Тёплый (не горячий)', phonetic:'/ˈluːkwɔːrm/', cat:'making', def:'Only slightly warm, not hot.', defRu:'Чуть тёплый, не горячий.', ex:'"Not too hot — lukewarm, please."', exRu:'«Не очень горячо — тёплый, пожалуйста.»'},
+      {word:'Strong / weak', ru:'Крепкий / некрепкий', phonetic:'/strɒŋ / wiːk/', cat:'making', def:'How intense the coffee taste is.', defRu:'Насколько насыщенный вкус кофе.', ex:'"Strong or weak coffee?"', exRu:'«Крепкий или некрепкий кофе?»'},
+      {word:'To stir', ru:'Размешать', phonetic:'/tə stɜːr/', cat:'making', def:'To mix with a spoon or stick.', defRu:'Перемешать ложкой или палочкой.', ex:'"Stir in the sugar well."', exRu:'«Хорошо размешайте сахар.»'},
+      {word:'Sweetener', ru:'Подсластитель', phonetic:'/ˈswiːtnər/', cat:'making', def:'A sugar substitute, often for diets.', defRu:'Заменитель сахара, часто для диеты.', ex:'"Sugar or sweetener?"', exRu:'«Сахар или подсластитель?»'},
+      {word:'Whipped cream', ru:'Взбитые сливки', phonetic:'/wɪpt kriːm/', cat:'making', def:'Soft cream on top of a sweet drink.', defRu:'Мягкие сливки сверху сладкого напитка.', ex:'"With whipped cream on top?"', exRu:'«Со взбитыми сливками сверху?»'},
+      {word:'Would you like syrup?', ru:'Добавить сироп?', phonetic:'/ˈsɪrəp/', cat:'making', def:'Offering flavoured syrup in the coffee.', defRu:'Предлагаем ароматный сироп в кофе.', ex:'"Would you like syrup in your coffee — vanilla or caramel?"', exRu:'«Добавить сироп в кофе — ванильный или карамельный?»'},
+      {word:'Milk alternatives', ru:'Альтернативы молоку', phonetic:'/mɪlk ɔːlˈtɜːnətɪvz/', cat:'making', def:'Plant milks for guests who avoid dairy.', defRu:'Растительное молоко для тех, кто не пьёт обычное.', ex:'"We have regular, oat and almond milk — which would you like?"', exRu:'«У нас есть обычное, овсяное и миндальное молоко — какое желаете?»'},
+      {word:'A lid', ru:'Крышка', phonetic:'/ə lɪd/', cat:'serving', def:'The cover on top of a takeaway cup.', defRu:'Крышка на стакане с собой.', ex:'"Do you want a lid?"', exRu:'«Вам крышку?»'},
+      {word:'A sleeve', ru:'Картонный держатель', phonetic:'/ə sliːv/', cat:'serving', def:'The cardboard ring so the cup is not too hot.', defRu:'Картонное кольцо, чтобы стакан не жёг руки.', ex:'"I added a sleeve, it is hot."', exRu:'«Я надел держатель, он горячий.»'},
+      {word:'For here or to go?', ru:'Здесь или с собой?', phonetic:'/fɔːr hɪər/', cat:'serving', def:'Drink in the café or take it away.', defRu:'Пить в кафе или взять с собой.', ex:'"Is that for here or to go?"', exRu:'«Это здесь или с собой?»'},
+      {word:'Careful, it is hot', ru:'Осторожно, горячо', phonetic:'/ˈkeəfl ɪt ɪz hɒt/', cat:'serving', def:'A warning when handing a hot drink.', defRu:'Предупреждение, когда подаёшь горячее.', ex:'"Here you go — careful, it is hot."', exRu:'«Вот, держите — осторожно, горячо.»'},
+      {word:'Your order is ready', ru:'Ваш заказ готов', phonetic:'/jɔːr ˈɔːdər ɪz ˈredi/', cat:'serving', def:'Said when the drink is finished.', defRu:'Говорят, когда напиток готов.', ex:'"One latte, your order is ready!"', exRu:'«Один латте, ваш заказ готов!»'},
+      {word:'Small / medium / large', ru:'Маленький / средний / большой', phonetic:'/smɔːl ˈmiːdiəm lɑːrdʒ/', cat:'sizes', def:'The three cup sizes.', defRu:'Три размера стакана.', ex:'"Small, medium or large?"', exRu:'«Маленький, средний или большой?»'},
+      {word:'A tray', ru:'Поднос', phonetic:'/ə treɪ/', cat:'serving', def:'A flat board to carry cups.', defRu:'Плоская доска, чтобы нести стаканы.', ex:'"I will put it on a tray."', exRu:'«Я поставлю на поднос.»'},
+      {word:'At the till / cash desk', ru:'На кассе', phonetic:'/ət ðə tɪl/', cat:'payment', def:'The place where guests pay.', defRu:'Место, где гости оплачивают.', ex:'"You can pay at the till, by card."', exRu:'«Оплатить можно на кассе, картой.»'},
+    ],
+    quiz:[
+      {q:'"Would you like the milk heated, or cold?" asks about…', qRu:'«Milk heated or cold?» про…', opts:['The cup size','The milk temperature','The price','The syrup'], ans:1, tip:'You ask if the milk should be hot or cold.', tipRu:'Спрашиваете, тёплое молоко или холодное.'},
+      {q:'"Extra hot" means the guest wants it…', qRu:'«Extra hot» значит, гость хочет…', opts:['Cold','Warm','Hotter than usual','With more milk'], ans:2, tip:'Extra hot = hotter than normal.', tipRu:'Extra hot — горячее обычного.'},
+      {q:'"Lukewarm" means…', qRu:'«Lukewarm» значит…', opts:['Boiling hot','Only slightly warm','Ice cold','Very strong'], ans:1, tip:'Lukewarm = barely warm.', tipRu:'Lukewarm — чуть тёплый.'},
+      {q:'"For here or to go?" asks if the guest…', qRu:'«For here or to go?» спрашивает, гость…', opts:['Pays now or later','Drinks in or takes away','Wants sugar','Wants a large size'], ans:1, tip:'For here = stay. To go = take away.', tipRu:'For here — здесь. To go — с собой.'},
+      {q:'"A sleeve" is used so that…', qRu:'«A sleeve» нужен, чтобы…', opts:['The drink stays cold','The cup is not too hot to hold','The lid stays on','It looks nice'], ans:1, tip:'A sleeve protects the hand from a hot cup.', tipRu:'Держатель защищает руку от горячего стакана.'},
+      {q:'You say "Careful, it is hot" to…', qRu:'«Careful, it is hot» говорят, чтобы…', opts:['Offer syrup','Warn the guest','Offer a size','Take the order'], ans:1, tip:'A warning when handing a hot drink.', tipRu:'Предупреждение при подаче горячего.'},
+      {q:'"Strong" coffee has…', qRu:'«Strong» кофе…', opts:['More water','A more intense taste','More milk','Less caffeine'], ans:1, tip:'Strong = intense, weak = light.', tipRu:'Strong — насыщенный, weak — слабый.'},
+      {q:'"Would you like syrup?" offers…', qRu:'«Would you like syrup?» предлагает…', opts:['A bigger cup','Flavoured syrup (vanilla / caramel)','A lid','Cold milk'], ans:1, tip:'Syrup adds flavour — vanilla or caramel.', tipRu:'Сироп добавляет вкус — ваниль или карамель.'},
+      {q:'"Milk alternatives" are…', qRu:'«Milk alternatives» — это…', opts:['Sugar and cream','Oat and almond milk','Hot water','Whipped cream'], ans:1, tip:'Plant milks: oat, almond, soy.', tipRu:'Растительное молоко: овсяное, миндальное, соевое.'},
+      {q:'"A lid" is…', qRu:'«A lid» — это…', opts:['The cup sleeve','The cover on a takeaway cup','A spoon','A tray'], ans:1, tip:'The lid covers the takeaway cup.', tipRu:'Крышка закрывает стакан с собой.'},
+      {q:'"Small, medium or large?" asks…', qRu:'«Small, medium or large?» спрашивает…', opts:['The milk','The cup size','The price','The syrup'], ans:1, tip:'You ask the cup size.', tipRu:'Спрашиваете размер стакана.'},
+      {q:'"At the till" — the till is…', qRu:'«At the till» — till это…', opts:['The coffee machine','The place to pay','The fridge','The tray'], ans:1, tip:'Till / cash desk = where guests pay.', tipRu:'Till / cash desk — касса.'},
+      {q:'"To stir" means…', qRu:'«To stir» значит…', opts:['To heat','To mix with a spoon','To pour out','To froth'], ans:1, tip:'Stir = mix, e.g. the sugar.', tipRu:'Stir — размешать, например сахар.'},
+    ],
+    scenes:[
+      {title:'Taking a Coffee Order', titleRu:'Принимаем заказ кофе', icon:'☕',
+       context:'A passenger orders coffee with some requests.', contextRu:'Пассажир заказывает кофе с пожеланиями.',
+       lines:[
+         {who:'staff', text:'<span class="highlight">Hi! What can I get you?</span>', ru:'Здравствуйте! Что вам приготовить?'},
+         {who:'guest', text:'An americano, please.', ru:'Американо, пожалуйста.'},
+         {who:'staff', text:'<span class="highlight">Sure. Would you like the milk heated, or cold?</span>', ru:'Конечно. Молоко нагреть или холодное?'},
+         {who:'guest', text:'Cold, please. Medium size.', ru:'Холодное, пожалуйста. Средний размер.'},
+         {who:'staff', text:'<span class="highlight">Would you like syrup — vanilla or caramel?</span>', ru:'Добавить сироп — ванильный или карамельный?'},
+         {who:'guest', text:'No syrup, thanks. For here.', ru:'Без сиропа, спасибо. Здесь.'},
+       ],
+       phrases:[
+         {en:'Would you like the milk heated, or cold?', ru:'Молоко нагреть или холодное?', tip:'Уточняйте температуру молока для американо.'},
+         {en:'Small, medium or large?', ru:'Маленький, средний или большой?', tip:'Всегда уточняйте размер.'},
+         {en:'Would you like syrup?', ru:'Добавить сироп?', tip:'Предложите сироп — это улучшает сервис и продажи.'},
+       ]},
+      {title:'Milk Alternatives & Handover', titleRu:'Альтернативы молоку и отдача', icon:'🥛',
+       context:'A guest asks about milk, then you hand over the drink.', contextRu:'Гость спрашивает про молоко, затем вы отдаёте напиток.',
+       lines:[
+         {who:'guest', text:'Do you have any milk alternatives?', ru:'У вас есть альтернативы молоку?'},
+         {who:'staff', text:'<span class="highlight">Yes, we have oat and almond milk.</span>', ru:'Да, у нас есть овсяное и миндальное молоко.'},
+         {who:'guest', text:'A latte with oat milk, please. To go.', ru:'Латте на овсяном, пожалуйста. С собой.'},
+         {who:'staff', text:'<span class="highlight">Of course. Careful, it is hot — I put a sleeve on it.</span>', ru:'Конечно. Осторожно, горячо — я надел держатель.'},
+         {who:'staff', text:'<span class="highlight">You can pay at the till, by card. Have a nice flight!</span>', ru:'Оплатить можно на кассе, картой. Хорошего полёта!'},
+       ],
+       phrases:[
+         {en:'We have oat and almond milk.', ru:'У нас есть овсяное и миндальное молоко.', tip:'Знайте опции молока — гости часто спрашивают.'},
+         {en:'Careful, it is hot.', ru:'Осторожно, горячо.', tip:'Всегда предупреждайте про горячие напитки.'},
+         {en:'You can pay at the till, by card.', ru:'Оплатить можно на кассе, картой.', tip:'Подскажите, где и чем платить.'},
+       ]},
+    ]
+  },
+
+  waiter: {
+    name:'Waiter', nameRu:'Официант', icon:'🍽️', accent:'#C56B4A',
+    cards:[
+      {word:'Are you ready to order?', ru:'Готовы заказать?', phonetic:'/ˈredi tə ˈɔːrdər/', cat:'ordering', def:'Asking if the guest wants to choose now.', defRu:'Спрашиваем, готов ли гость выбрать.', ex:'"Are you ready to order, or need a minute?"', exRu:'«Готовы заказать или нужна минута?»'},
+      {word:'To recommend', ru:'Рекомендовать', phonetic:'/ˌrekəˈmend/', cat:'ordering', def:'To suggest a good dish to a guest.', defRu:'Предложить гостю хорошее блюдо.', ex:'"I recommend the ribeye steak — tender and juicy."', exRu:'«Рекомендую стейк рибай — нежный и сочный.»'},
+      {word:'Allergy', ru:'Аллергия', phonetic:'/ˈælərdʒi/', cat:'ordering', def:'When a food makes a person ill.', defRu:'Когда еда вызывает плохую реакцию.', ex:'"Any allergies I should know?"', exRu:'«Есть аллергии, о которых нужно знать?»'},
+      {word:'Spicy / not spicy', ru:'Острый / не острый', phonetic:'/ˈspaɪsi/', cat:'food', def:'Has a hot, strong chili taste — or not.', defRu:'С острым перечным вкусом — или без.', ex:'"Spicy or not spicy?"', exRu:'«Острый или не острый?»'},
+      {word:'A starter', ru:'Закуска', phonetic:'/ə ˈstɑːtər/', cat:'food', def:'A small dish before the main.', defRu:'Небольшое блюдо перед основным.', ex:'"Any starter, like nachos?"', exRu:'«Будете закуску, например начос?»'},
+      {word:'Main dish', ru:'Основное блюдо', phonetic:'/meɪn dɪʃ/', cat:'food', def:'The biggest, central dish.', defRu:'Самое большое, главное блюдо.', ex:'"And for your main dish?"', exRu:'«А на основное блюдо?»'},
+      {word:'To bring', ru:'Принести', phonetic:'/tə brɪŋ/', cat:'serving', def:'To carry something to the table.', defRu:'Принести что-то на стол.', ex:'"I will bring it right away."', exRu:'«Принесу сейчас же.»'},
+      {word:'Right away', ru:'Сейчас же', phonetic:'/raɪt əˈweɪ/', cat:'serving', def:'Immediately, very soon.', defRu:'Немедленно, очень скоро.', ex:'"Coming right away."', exRu:'«Сейчас же будет.»'},
+      {word:'Is everything okay?', ru:'Всё в порядке?', phonetic:'/ɪz ˈevriθɪŋ oʊˈkeɪ/', cat:'serving', def:'Checking the guest likes the food.', defRu:'Проверяем, нравится ли гостю еда.', ex:'"Is everything okay with your meal?"', exRu:'«Всё в порядке с вашим блюдом?»'},
+      {word:'To clear the table', ru:'Убрать со стола', phonetic:'/klɪər ðə ˈteɪbl/', cat:'serving', def:'To remove used plates and glasses.', defRu:'Убрать грязные тарелки и стаканы.', ex:'"May I clear the table?"', exRu:'«Можно убрать со стола?»'},
+      {word:'Here is your bill', ru:'Вот ваш счёт', phonetic:'/hɪər ɪz jɔːr bɪl/', cat:'bill', def:'Given to the guest with the total; then confirm payment.', defRu:'Подаём гостю с суммой; затем уточняем оплату.', ex:'"Here is your bill. How will you pay — cash or card?"', exRu:'«Вот ваш счёт. Как будете платить — наличными или картой?»'},
+      {word:'Together or separate?', ru:'Вместе или раздельно?', phonetic:'/təˈɡeðər ɔːr ˈseprət/', cat:'bill', def:'One bill, or split between guests.', defRu:'Один счёт или разделить между гостями.', ex:'"Together or separate bills?"', exRu:'«Счёт вместе или раздельно?»'},
+      {word:'To pack it to go', ru:'Упаковать с собой', phonetic:'/pæk ɪt tə ɡoʊ/', cat:'bill', def:'To put leftover food in a box to take.', defRu:'Положить остатки еды в коробку с собой.', ex:'"Shall I pack the rest to go?"', exRu:'«Упаковать остатки с собой?»'},
+      {word:'We are out of that', ru:'Этого сейчас нет', phonetic:'/aʊt əv ðæt/', cat:'alternatives', def:'To politely say an item is not available now.', defRu:'Вежливо сказать, что позиции сейчас нет.', ex:'"Sorry, we are out of the ribeye right now."', exRu:'«К сожалению, сейчас нет стейка рибай.»'},
+      {word:'Can I suggest instead…?', ru:'Могу предложить вместо…?', phonetic:'/səˈdʒest ɪnˈsted/', cat:'alternatives', def:'To offer a different dish when one is unavailable.', defRu:'Предложить другое блюдо, если этого нет.', ex:'"Can I suggest the grilled chicken instead? It is very good."', exRu:'«Могу предложить вместо этого курицу на гриле? Очень вкусно.»'},
+    ],
+    quiz:[
+      {q:'"Are you ready to order?" asks if the guest…', qRu:'«Ready to order?» спрашивает, гость…', opts:['Wants the bill','Wants to choose now','Has an allergy','Is leaving'], ans:1, tip:'Asking if they want to choose their food now.', tipRu:'Спрашиваете, готовы ли выбрать еду.'},
+      {q:'"I recommend the ribeye" — you say this to…', qRu:'«I recommend the ribeye» говорят, чтобы…', opts:['Take the bill','Suggest a good dish','Clear the table','Ask an allergy'], ans:1, tip:'Recommend = suggest a good dish.', tipRu:'Recommend — предложить хорошее блюдо.'},
+      {q:'"Spicy" food has…', qRu:'«Spicy» еда…', opts:['No taste','A hot chili taste','A sweet taste','A cold taste'], ans:1, tip:'Spicy = hot, with chili or pepper.', tipRu:'Spicy — острый, с перцем чили.'},
+      {q:'"A starter" is…', qRu:'«A starter» — это…', opts:['The main dish','A small dish before the main','The bill','A drink'], ans:1, tip:'Starter = the first small dish.', tipRu:'Starter — первое небольшое блюдо.'},
+      {q:'"Is everything okay?" is asked to…', qRu:'«Is everything okay?» спрашивают, чтобы…', opts:['Take the order','Check the guest likes the food','Bring the bill','Clear the table'], ans:1, tip:'Check in during the meal.', tipRu:'Проверить во время еды, всё ли нравится.'},
+      {q:'"To clear the table" means…', qRu:'«To clear the table» значит…', opts:['Set new plates','Remove used plates','Bring the menu','Clean the floor'], ans:1, tip:'Take away the used dishes.', tipRu:'Унести грязную посуду.'},
+      {q:'"Together or separate?" is about…', qRu:'«Together or separate?» про…', opts:['The food','The bill','The table','The drinks'], ans:1, tip:'One bill, or split between guests.', tipRu:'Один счёт или разделить между гостями.'},
+      {q:'"To pack it to go" means…', qRu:'«To pack it to go» значит…', opts:['Cook more food','Box up leftovers to take away','Pay the bill','Order again'], ans:1, tip:'Put the rest of the food in a box.', tipRu:'Сложить остатки еды в коробку с собой.'},
+      {q:'"Right away" means…', qRu:'«Right away» значит…', opts:['Later','In an hour','Immediately','Tomorrow'], ans:2, tip:'Right away = immediately, very soon.', tipRu:'Right away — сейчас же, немедленно.'},
+      {q:'"Sorry, we are out of that" means…', qRu:'«We are out of that» значит…', opts:['It is free','It is not available now','It is very spicy','It is on the menu'], ans:1, tip:'Out of = we do not have it now.', tipRu:'Out of — сейчас этого нет.'},
+      {q:'"Can I suggest ... instead?" — you say when…', qRu:'«Can I suggest ... instead?» говорят, когда…', opts:['The guest pays','An item is unavailable','The food is spicy','The table is dirty'], ans:1, tip:'Offer an alternative when a dish is out.', tipRu:'Предложить замену, если блюда нет.'},
+      {q:'"Here is your bill. How will you pay?" — you confirm…', qRu:'«How will you pay?» — уточняете…', opts:['The dish','Cash or card','The allergy','The table'], ans:1, tip:'Confirm the payment method.', tipRu:'Уточняете способ оплаты.'},
+      {q:'A guest with an "allergy"…', qRu:'Гость с «allergy»…', opts:['Wants more food','Cannot eat a certain food','Wants the bill','Is in a hurry'], ans:1, tip:'An allergy can be dangerous — always check.', tipRu:'Аллергия может быть опасной — всегда уточняйте.'},
+    ],
+    scenes:[
+      {title:'Taking an Order · Out of Stock', titleRu:'Заказ · позиции нет', icon:'📝',
+       context:'A guest orders, but one dish is unavailable — you offer an alternative.', contextRu:'Гость заказывает, но одного блюда нет — вы предлагаете замену.',
+       lines:[
+         {who:'staff', text:'<span class="highlight">Are you ready to order?</span>', ru:'Готовы заказать?'},
+         {who:'guest', text:'Yes. I will have the ribeye steak.', ru:'Да. Мне стейк рибай.'},
+         {who:'staff', text:'<span class="highlight">I am sorry, we are out of the ribeye right now. Can I suggest the grilled chicken instead? It is very good.</span>', ru:'К сожалению, сейчас нет рибая. Могу предложить курицу на гриле? Очень вкусно.'},
+         {who:'guest', text:'Okay, the chicken. Not too spicy.', ru:'Хорошо, курицу. Не очень острую.'},
+         {who:'staff', text:'<span class="highlight">Of course. Any allergies I should know?</span>', ru:'Конечно. Есть аллергии, о которых нужно знать?'},
+         {who:'guest', text:'No allergies, thank you.', ru:'Нет аллергий, спасибо.'},
+       ],
+       phrases:[
+         {en:'Are you ready to order?', ru:'Готовы заказать?', tip:'Если нет — скажите «Take your time».'},
+         {en:'Sorry, we are out of that right now.', ru:'К сожалению, этого сейчас нет.', tip:'Вежливо сообщите, что позиции нет.'},
+         {en:'Can I suggest ... instead?', ru:'Могу предложить вместо этого…?', tip:'Сразу предложите замену — не оставляйте гостя без выбора.'},
+       ]},
+      {title:'Checking In & The Bill', titleRu:'Проверка и счёт', icon:'🧾',
+       context:'You check on the guests and bring the bill.', contextRu:'Вы проверяете гостей и приносите счёт.',
+       lines:[
+         {who:'staff', text:'<span class="highlight">Is everything okay with your meal?</span>', ru:'Всё в порядке с вашим блюдом?'},
+         {who:'guest', text:'Very good, thanks. Could we have the bill?', ru:'Очень вкусно, спасибо. Можно счёт?'},
+         {who:'staff', text:'<span class="highlight">Here is your bill. How will you pay — cash or card?</span>', ru:'Вот ваш счёт. Как будете платить — наличными или картой?'},
+         {who:'guest', text:'Card. And can you pack the rest to go?', ru:'Картой. И упакуйте остатки с собой?'},
+         {who:'staff', text:'<span class="highlight">Of course, right away.</span>', ru:'Конечно, сейчас же.'},
+       ],
+       phrases:[
+         {en:'Is everything okay with your meal?', ru:'Всё в порядке с вашим блюдом?', tip:'Спросите один раз во время еды — это хороший сервис.'},
+         {en:'Here is your bill. How will you pay — cash or card?', ru:'Вот ваш счёт. Как будете платить — наличными или картой?', tip:'Подайте счёт и сразу уточните способ оплаты.'},
+         {en:'Shall I pack the rest to go?', ru:'Упаковать остатки с собой?', tip:'Вежливо предложите забрать остатки.'},
+       ]},
+    ]
+  },
+
+  relay: {
+    name:'Relay Cashier', nameRu:'Кассир Relay', icon:'🗞️', accent:'#4FA3A0',
+    cards:[
+      {word:'A paperback book', ru:'Книга в мягкой обложке', phonetic:'/ə ˈpeɪpərbæk/', cat:'press', def:'A book with a soft cover.', defRu:'Книга в мягкой обложке.', ex:'"Our bestsellers are on this shelf."', exRu:'«Наши бестселлеры на этой полке.»'},
+      {word:'Tissues', ru:'Салфетки / платочки', phonetic:'/ˈtɪʃuːz/', cat:'travel', def:'Soft paper to clean your hands or face.', defRu:'Мягкие бумажные платочки для рук и лица.', ex:'"A pack of tissues is by the till."', exRu:'«Упаковка салфеток у кассы.»'},
+      {word:'A snack', ru:'Перекус', phonetic:'/ə snæk/', cat:'snacks', def:'A small, quick food.', defRu:'Небольшая быстрая еда.', ex:'"Any snacks for the flight?"', exRu:'«Какой-нибудь перекус в дорогу?»'},
+      {word:'Bottled water', ru:'Вода в бутылке', phonetic:'/ˈbɒtld ˈwɔːtər/', cat:'snacks', def:'Drinking water sold in a bottle.', defRu:'Питьевая вода в бутылке.', ex:'"Still or sparkling bottled water?"', exRu:'«Вода с газом или без?»'},
+      {word:'Chewing gum', ru:'Жвачка', phonetic:'/ˈtʃuːɪŋ ɡʌm/', cat:'snacks', def:'A soft sweet you chew, do not swallow.', defRu:'Мягкая сладость, которую жуют, не глотая.', ex:'"The gum is by the register."', exRu:'«Жвачка у кассы.»'},
+      {word:'Chocolate / sweets', ru:'Шоколад / сладости', phonetic:'/ˈtʃɒklət/', cat:'snacks', def:'Sweet treats and candy.', defRu:'Сладкие лакомства и конфеты.', ex:'"The chocolate is on aisle two."', exRu:'«Шоколад во втором ряду.»'},
+      {word:'Crisps / chips', ru:'Чипсы', phonetic:'/krɪsps/', cat:'snacks', def:'Thin fried potato snacks in a bag.', defRu:'Тонкие жареные картофельные снеки в пакете.', ex:'"We have salted and BBQ crisps."', exRu:'«У нас есть солёные и барбекю чипсы.»'},
+      {word:'A SIM card', ru:'SIM-карта', phonetic:'/ə sɪm kɑːrd/', cat:'travel', def:'A small chip for a phone network.', defRu:'Маленький чип для мобильной сети.', ex:'"Do you sell local SIM cards?"', exRu:'«Вы продаёте местные SIM-карты?»'},
+      {word:'A neck pillow', ru:'Подушка для шеи', phonetic:'/nek ˈpɪloʊ/', cat:'travel', def:'A small pillow for sleeping while traveling.', defRu:'Маленькая подушка для сна в дороге.', ex:'"A neck pillow makes the flight easier."', exRu:'«С подушкой для шеи лететь легче.»'},
+      {word:'Earphones', ru:'Наушники', phonetic:'/ˈɪərfoʊnz/', cat:'travel', def:'Small speakers you put in your ears.', defRu:'Маленькие динамики, которые вставляют в уши.', ex:'"Earphones are on the rack."', exRu:'«Наушники на стойке.»'},
+      {word:'How much is it?', ru:'Сколько стоит?', phonetic:'/haʊ mʌtʃ ɪz ɪt/', cat:'payment', def:'Asking the price of an item.', defRu:'Спрашиваем цену товара.', ex:'"How much is this book?"', exRu:'«Сколько стоит эта книга?»'},
+      {word:'Do you need a bag?', ru:'Нужен пакет?', phonetic:'/du jə niːd ə bæɡ/', cat:'payment', def:'Asking if the customer wants a bag.', defRu:'Спрашиваем, нужен ли покупателю пакет.', ex:'"Do you need a bag for that?"', exRu:'«Нужен пакет для этого?»'},
+    ],
+    quiz:[
+      {q:'A "paperback" is…', qRu:'«Paperback» — это…', opts:['A snack','A book with a soft cover','A newspaper','A map'], ans:1, tip:'Paperback = soft-cover book.', tipRu:'Paperback — книга в мягкой обложке.'},
+      {q:'"Tissues" are used to…', qRu:'«Tissues» нужны, чтобы…', opts:['Charge a phone','Clean your hands or face','Listen to music','Read'], ans:1, tip:'Tissues = soft paper for hands or face.', tipRu:'Tissues — бумажные платочки для рук и лица.'},
+      {q:'A "SIM card" is for…', qRu:'«SIM card» нужна для…', opts:['Charging a phone','A phone network','Listening to music','Reading'], ans:1, tip:'A SIM connects the phone to a network.', tipRu:'SIM подключает телефон к сети.'},
+      {q:'A "snack" is…', qRu:'«A snack» — это…', opts:['A book','A small, quick food','A charger','A bag'], ans:1, tip:'A snack = a small, quick food.', tipRu:'Snack — небольшая быстрая еда.'},
+      {q:'"Chocolate / sweets" are…', qRu:'«Chocolate / sweets» — это…', opts:['Sweet treats and candy','Fried potato snacks','Drinks','Books'], ans:0, tip:'Sweet treats to buy at the till.', tipRu:'Сладости, которые берут у кассы.'},
+      {q:'A "neck pillow" is for…', qRu:'«Neck pillow» нужна, чтобы…', opts:['Carrying books','Sleeping while traveling','Keeping drinks cold','Charging a phone'], ans:1, tip:'It supports the neck for sleeping.', tipRu:'Поддерживает шею во время сна.'},
+      {q:'"How much is it?" asks…', qRu:'«How much is it?» спрашивает…', opts:['The size','The price','The time','The brand'], ans:1, tip:'It asks the price.', tipRu:'Спрашивает цену.'},
+      {q:'"Do you need a bag?" — you ask this…', qRu:'«Do you need a bag?» — спрашивают…', opts:['Before the order','At the till after buying','At the entrance','When stocking shelves'], ans:1, tip:'Asked at payment, after they choose.', tipRu:'Спрашивают на кассе, после выбора.'},
+      {q:'"Bottled water" is…', qRu:'«Bottled water» — это…', opts:['Tap water','Drinking water in a bottle','A soft drink','A snack'], ans:1, tip:'Water sold in a bottle, still or sparkling.', tipRu:'Вода в бутылке, с газом или без.'},
+      {q:'"Earphones" are…', qRu:'«Earphones» — это…', opts:['Small speakers for your ears','A phone battery','A type of book','A charger'], ans:0, tip:'You put earphones in your ears to listen.', tipRu:'Наушники вставляют в уши, чтобы слушать.'},
+      {q:'"Chewing gum" is…', qRu:'«Chewing gum» — это…', opts:['A drink','A soft sweet you chew, not swallow','A book','A snack bar'], ans:1, tip:'You chew gum, you do not swallow it.', tipRu:'Жвачку жуют, не глотая.'},
+      {q:'"Still or sparkling?" asks about the…', qRu:'«Still or sparkling?» про…', opts:['Book','Water (with or without gas)','SIM card','Price'], ans:1, tip:'Still = no gas, sparkling = with gas.', tipRu:'Still — без газа, sparkling — с газом.'},
+      {q:'"Crisps / chips" are…', qRu:'«Crisps / chips» — это…', opts:['Sweets','Fried potato snacks in a bag','Bottled water','Books'], ans:1, tip:'Thin fried potato snacks.', tipRu:'Тонкие жареные картофельные снеки.'},
+    ],
+    scenes:[
+      {title:'A Quick Purchase', titleRu:'Быстрая покупка', icon:'🛒',
+       context:'A passenger buys a few things before the flight.', contextRu:'Пассажир покупает пару вещей перед рейсом.',
+       lines:[
+         {who:'guest', text:'A bottle of water and this book, please.', ru:'Бутылку воды и эту книгу, пожалуйста.'},
+         {who:'staff', text:'<span class="highlight">Sure. Still or sparkling water?</span>', ru:'Конечно. Вода с газом или без?'},
+         {who:'guest', text:'Still, please. How much is it all?', ru:'Без газа, пожалуйста. Сколько всё вместе?'},
+         {who:'staff', text:'<span class="highlight">That is 2,500 tenge. Do you need a bag?</span>', ru:'2 500 тенге. Нужен пакет?'},
+         {who:'guest', text:'No, thanks. Card okay?', ru:'Нет, спасибо. Картой можно?'},
+         {who:'staff', text:'<span class="highlight">Yes, tenge or card — Visa or Mastercard. Here is your receipt.</span>', ru:'Да, тенге или карта — Visa или Mastercard. Вот ваш чек.'},
+       ],
+       phrases:[
+         {en:'Still or sparkling?', ru:'С газом или без?', tip:'Стандартный вопрос про воду.'},
+         {en:'How much is it all?', ru:'Сколько всё вместе?', tip:'Гость спрашивает общую сумму.'},
+         {en:'Do you need a bag?', ru:'Нужен пакет?', tip:'Спросите на кассе.'},
+       ]},
+      {title:'Looking for Travel Items', titleRu:'Ищем товары в дорогу', icon:'🔌',
+       context:'A passenger needs travel accessories.', contextRu:'Пассажиру нужны аксессуары в дорогу.',
+       lines:[
+         {who:'guest', text:'Do you sell SIM cards?', ru:'Вы продаёте SIM-карты?'},
+         {who:'staff', text:'<span class="highlight">Yes, local SIM cards are right here.</span>', ru:'Да, местные SIM-карты прямо здесь.'},
+         {who:'guest', text:'Great. And do you have earphones?', ru:'Отлично. И есть наушники?'},
+         {who:'staff', text:'<span class="highlight">Yes, the earphones are on the rack. Anything else?</span>', ru:'Да, наушники на стойке. Что-нибудь ещё?'},
+         {who:'guest', text:'A neck pillow too, please.', ru:'Ещё подушку для шеи, пожалуйста.'},
+         {who:'staff', text:'<span class="highlight">Of course, they are on the shelf behind you.</span>', ru:'Конечно, они на полке за вами.'},
+       ],
+       phrases:[
+         {en:'Local SIM cards are right here.', ru:'Местные SIM-карты прямо здесь.', tip:'Показывайте рукой, где лежит товар.'},
+         {en:'The earphones are on the rack.', ru:'Наушники на стойке.', tip:'Знайте, где что лежит, чтобы быстро показать.'},
+         {en:'Anything else?', ru:'Что-нибудь ещё?', tip:'Вежливо предложить добрать ещё товары.'},
+       ]},
+    ]
+  },
+};
+
+// ════════════════════ STATE ════════════════════
+let currentDept=null, currentView='home';
+let fcIndex=0, isFlipped=false, fcFilter='all', fcFiltered=[], fcStatus=[];
+let qIndex=0, qCorrectCount=0, qAnswered=false;
+let currentUserData=null;   // in-memory copy of the logged-in user's Firestore doc
+
+// ════════════════════ NAV ════════════════════
+function buildHome(){
+  document.getElementById('deptGrid').innerHTML = Object.entries(departments).map(([key,d],i)=>{
+    const num=String(i+1).padStart(2,'0');
+    return `<div class="module-card" onclick="selectDept('${key}')">
+      <div class="module-card-strip" style="background:${rgba(d.accent,0.10)}">${d.icon}</div>
+      <div class="module-card-body">
+        <div class="card-gate">Role ${num}</div>
+        <div class="card-title">${d.name}</div>
+        <div class="card-title-ru ru-text">${d.nameRu}</div>
+        <div class="card-desc">${d.cards.length} words · ${d.quiz.length} quiz · ${d.scenes.length} dialogues</div>
+        <div class="card-meta">
+          <span class="card-badge" style="background:${rgba(d.accent,0.12)};color:${d.accent};border:1px solid ${rgba(d.accent,0.3)}">Start</span>
+          <span class="card-go" style="color:${d.accent}">→</span>
+        </div>
+      </div></div>`;
+  }).join('');
+}
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+
+function selectDept(key){
+  currentDept=key; const d=departments[key];
+  document.documentElement.style.setProperty('--accent',d.accent);
+  document.documentElement.style.setProperty('--accent-dim',rgba(d.accent,0.22));
+  document.documentElement.style.setProperty('--accent-soft',rgba(d.accent,0.10));
+  const nd=document.getElementById('navDept'); nd.textContent=d.icon+' '+d.name; nd.classList.add('show');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.add('visible'));
+  fcIndex=0; isFlipped=false; fcFilter='all'; fcFiltered=[...d.cards]; fcStatus=new Array(d.cards.length).fill('unseen');
+  qIndex=0; qCorrectCount=0;
+  document.getElementById('menuIcon').textContent=d.icon;
+  document.getElementById('menuTitle').textContent=d.name;
+  document.getElementById('menuTitleRu').textContent=d.nameRu;
+  goTo('menu');
+}
+function goHome(){
+  currentDept=null;
+  document.getElementById('navDept').classList.remove('show');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('visible','active'));
+  document.documentElement.style.setProperty('--accent','#C9A050');
+  document.documentElement.style.setProperty('--accent-dim','rgba(201,160,80,0.18)');
+  document.documentElement.style.setProperty('--accent-soft','rgba(201,160,80,0.10)');
+  if(currentUserData) showSection('home'); else showSection('login');
+}
+function goTo(view){
+  if(!currentDept) return;
+  currentView=view; showSection(view);
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.view===view));
+  if(view==='flashcards'){renderCats();renderCard();}
+  if(view==='quiz'){document.getElementById('qTotal').textContent=departments[currentDept].quiz.length;renderQuestion();}
+  if(view==='phrasebook'){renderSceneButtons();renderScene(0);}
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active'); window.scrollTo(0,0);
+}
+function toggleRu(){
+  document.body.classList.toggle('show-ru');
+  const on=document.body.classList.contains('show-ru');
+  const t=document.getElementById('ruToggle'); t.textContent=on?'RU ✓':'RU'; t.classList.toggle('off',!on);
+}
+
+// ════════════════════ FLASHCARDS ════════════════════
+function renderCats(){
+  const d=departments[currentDept];
+  const cats=['all',...new Set(d.cards.map(c=>c.cat))];
+  document.getElementById('fcCats').innerHTML=cats.map(c=>
+    `<button class="cat-btn ${c===fcFilter?'active':''}" onclick="filterCards('${c}')">${c==='all'?'All':c}</button>`).join('');
+}
+function filterCards(cat){
+  fcFilter=cat; const d=departments[currentDept];
+  fcFiltered=cat==='all'?[...d.cards]:d.cards.filter(c=>c.cat===cat);
+  fcIndex=0; isFlipped=false; renderCats(); renderCard();
+}
+function renderCard(){
+  if(!fcFiltered.length) return;
+  const c=fcFiltered[fcIndex];
+  document.getElementById('fcWord').textContent=c.word;
+  document.getElementById('fcRu').textContent=c.ru;
+  document.getElementById('fcPhonetic').textContent=c.phonetic;
+  document.getElementById('fcCat').textContent=c.cat.toUpperCase();
+  document.getElementById('fcDef').textContent=c.def;
+  document.getElementById('fcDefRu').textContent=c.defRu;
+  document.getElementById('fcEx').textContent=c.ex;
+  document.getElementById('fcExRu').textContent=c.exRu;
+  document.getElementById('fcCounter').textContent=`Card ${fcIndex+1} of ${fcFiltered.length} · tap card to flip`;
+  document.getElementById('flipCard').classList.remove('flipped'); isFlipped=false; renderDots();
+}
+function renderDots(){
+  const d=departments[currentDept];
+  document.getElementById('fcDots').innerHTML=fcFiltered.map((c,i)=>{
+    const gi=d.cards.indexOf(c); const st=fcStatus[gi];
+    const cls=i===fcIndex?'current':st==='known'?'known':(st==='seen'||st==='practice')?'seen':'';
+    return `<div class="fc-dot ${cls}" title="${c.word}"></div>`;}).join('');
+}
+function flipCard(){
+  isFlipped=!isFlipped;
+  document.getElementById('flipCard').classList.toggle('flipped',isFlipped);
+  const gi=departments[currentDept].cards.indexOf(fcFiltered[fcIndex]);
+  if(fcStatus[gi]==='unseen'){fcStatus[gi]='seen';renderDots();}
+}
+function nextCard(){if(fcIndex<fcFiltered.length-1){fcIndex++;renderCard();}}
+function prevCard(){if(fcIndex>0){fcIndex--;renderCard();}}
+function markCard(st){
+  const gi=departments[currentDept].cards.indexOf(fcFiltered[fcIndex]);
+  fcStatus[gi]=st;
+  if(st==='known') recordKnown(currentDept, departments[currentDept].cards[gi].word);
+  renderDots(); nextCard();
+}
+
+// ════════════════════ QUIZ ════════════════════
+function renderQuestion(){
+  const quiz=departments[currentDept].quiz;
+  document.getElementById('quizActive').style.display='block';
+  document.getElementById('quizResults').classList.remove('show');
+  const q=quiz[qIndex];
+  document.getElementById('qNum').textContent=`Question ${qIndex+1} of ${quiz.length}`;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qTextRu').textContent=q.qRu;
+  document.getElementById('qQ').textContent=qIndex+1;
+  const letters=['A','B','C','D'];
+  document.getElementById('qOpts').innerHTML=q.opts.map((o,i)=>
+    `<button class="opt-btn" onclick="answer(${i})"><span class="opt-letter">${letters[i]}</span><span class="opt-text">${o}</span></button>`).join('');
+  document.getElementById('qFeedback').className='quiz-feedback';
+  document.getElementById('qNext').style.display='none'; qAnswered=false;
+}
+function answer(idx){
+  if(qAnswered) return; qAnswered=true;
+  const q=departments[currentDept].quiz[qIndex];
+  const correct=idx===q.ans; if(correct) qCorrectCount++;
+  document.getElementById('qCorrect').textContent=qCorrectCount;
+  document.querySelectorAll('.opt-btn').forEach((b,i)=>{
+    b.disabled=true; if(i===q.ans)b.classList.add('correct'); if(i===idx&&!correct)b.classList.add('wrong');});
+  const fb=document.getElementById('qFeedback');
+  fb.className='quiz-feedback show '+(correct?'ok':'bad');
+  fb.innerHTML=(correct?'✓ Correct! ':'✗ Not quite. ')+q.tip+`<span class="fb-ru ru-text">${q.tipRu}</span>`;
+  document.getElementById('qNext').style.display='inline-flex';
+}
+function nextQuestion(){
+  qIndex++;
+  if(qIndex>=departments[currentDept].quiz.length){showResults();return;}
+  renderQuestion();
+}
+function showResults(){
+  const quiz=departments[currentDept].quiz;
+  document.getElementById('quizActive').style.display='none';
+  document.getElementById('quizResults').classList.add('show');
+  document.getElementById('finalScore').textContent=qCorrectCount;
+  document.getElementById('finalMax').textContent='/'+quiz.length;
+  const pct=(qCorrectCount/quiz.length)*100;
+  const m=pct===100?['Perfect!','Отлично! Вы готовы к работе.']
+    :pct>=80?['Well done!','Хороший результат. Ещё немного практики.']
+    :pct>=60?['Good start!','Повторите карточки и попробуйте снова.']
+    :['Keep going!','Изучите карточки — у вас получится!'];
+  document.getElementById('resultMsg').textContent=m[0];
+  document.getElementById('resultSub').textContent=m[1];
+  recordQuiz(currentDept, qCorrectCount, quiz.length);
+}
+function restartQuiz(){
+  qIndex=0; qCorrectCount=0;
+  document.getElementById('qCorrect').textContent=0;
+  document.getElementById('quizResults').classList.remove('show'); renderQuestion();
+}
+
+// ════════════════════ PHRASEBOOK ════════════════════
+let currentScene=0;
+function renderSceneButtons(){
+  const sc=departments[currentDept].scenes;
+  document.getElementById('pbScenes').innerHTML=sc.map((s,i)=>
+    `<button class="scene-btn ${i===0?'active':''}" onclick="showScene(${i})">${s.icon} ${s.title}</button>`).join('');
+}
+function showScene(i){
+  currentScene=i;
+  document.querySelectorAll('.scene-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  renderScene(i);
+}
+function renderScene(i){
+  const s=departments[currentDept].scenes[i];
+  document.getElementById('dialogueBox').innerHTML=`
+    <div class="scene-title">${s.icon} ${s.title} <span class="ru-inline">· ${s.titleRu}</span></div>
+    <div class="scene-context">${s.context}<span class="ru-text">${s.contextRu}</span></div>
+    ${s.lines.map(l=>{const plain=l.text.replace(/<[^>]+>/g,'');return `<div class="line">
+        <span class="line-who ${l.who}">${l.who==='guest'?'GUEST':'YOU'}</span>
+        <div style="flex:1"><div class="line-text">${l.text} <button class="speak-mini" data-text="${esc(plain)}" onclick="speakEl(this)" title="Listen">🔊</button></div><div class="line-ru ru-text">${l.ru}</div></div>
+      </div>`;}).join('')}`;
+  document.getElementById('keyPhrases').innerHTML=`
+    <h4>Key Phrases · <span class="ru-inline">Ключевые фразы</span></h4>
+    <div class="phrase-list">
+      ${s.phrases.map(p=>`<div class="phrase-item">
+          <div class="phrase-en">"${p.en}" <button class="speak-mini" data-text="${esc(p.en)}" onclick="speakEl(this)" title="Listen">🔊</button></div>
+          <div class="phrase-ru ru-text">${p.ru}</div>
+          <div class="phrase-tip">${p.tip}</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ════════════════════ AUDIO (pronunciation) ════════════════════
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function speak(text){
+  if(!text) return;
+  if(!('speechSynthesis' in window)){ alert('Sorry, your browser does not support audio. Try Chrome or Safari.'); return; }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=0.9; u.pitch=1;
+  const v=window.speechSynthesis.getVoices().find(x=>/en[-_]US/i.test(x.lang)) || window.speechSynthesis.getVoices().find(x=>/^en/i.test(x.lang));
+  if(v) u.voice=v;
+  window.speechSynthesis.speak(u);
+}
+function cleanWord(w){ return w.replace(/\s*\/\s*/g,', ').replace(/[()]/g,'').trim(); }
+function speakCard(e){ e.stopPropagation(); if(fcFiltered.length) speak(cleanWord(fcFiltered[fcIndex].word)); }
+function speakExample(e){ e.stopPropagation(); if(fcFiltered.length) speak(fcFiltered[fcIndex].ex.replace(/[«»"]/g,'')); }
+function speakEl(btn){ speak(btn.dataset.text); }
+// preload voices (some browsers load them async)
+if('speechSynthesis' in window){ window.speechSynthesis.onvoiceschanged=function(){}; window.speechSynthesis.getVoices(); }
+
+
+// ════════════════════ USERS / CABINET / ADMIN (Firestore-backed) ════════════════════
+const ADMIN_CODE = 'FBO-ADMIN-2026';   // <-- код доступа админа (можно поменять здесь)
+
+// "who is logged in on THIS device" is just a convenience pointer — kept locally
+// so returning staff don't retype their name. The actual progress lives in Firestore.
+function currentKey(){ try{ return localStorage.getItem('ala_current')||''; }catch(e){ return ''; } }
+function setCurrent(k){ try{ localStorage.setItem('ala_current', k); }catch(e){} }
+function cap(s){ return s ? s.charAt(0).toUpperCase()+s.slice(1) : s; }
+function emptyUserDoc(name){ return { name, created:Date.now(), lastActive:Date.now(), depts:{} }; }
+
+async function fetchUserDoc(key){
+  const ref = doc(db, 'users', key);
+  const snap = await getDoc(ref);
+  return snap.exists() ? snap.data() : null;
+}
+
+async function doLogin(){
+  const f=document.getElementById('inpFirst').value.trim();
+  const l=document.getElementById('inpLast').value.trim();
+  const errEl=document.getElementById('loginErr'); const btn=document.getElementById('loginBtn');
+  if(f.length<2 || l.length<2){ errEl.textContent='Please enter your first and last name · Введите имя и фамилию'; return; }
+  const key=(f+' '+l).toLowerCase();
+  errEl.textContent=''; btn.disabled=true; btn.textContent='Connecting… · Подключение…';
+  try{
+    let data = await fetchUserDoc(key);
+    const ref = doc(db, 'users', key);
+    if(!data){
+      data = emptyUserDoc(cap(f)+' '+cap(l));
+      await setDoc(ref, data);
+    } else {
+      await updateDoc(ref, { lastActive: Date.now() });
+      data.lastActive = Date.now();
+    }
+    currentUserData = data;
+    setCurrent(key);
+    showLoggedInNav();
+    goHome();
+  }catch(err){
+    console.error(err);
+    errEl.textContent='Connection error — check internet and try again · Ошибка соединения — проверьте интернет и повторите';
+  }finally{
+    btn.disabled=false; btn.innerHTML='Start · <span class="ru-inline">Начать</span>';
+  }
+}
+
+function doLogout(){
+  setCurrent(''); currentUserData=null; currentDept=null;
+  document.getElementById('navUser').classList.remove('show');
+  document.getElementById('navDept').classList.remove('show');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('visible','active'));
+  showSection('login');
+}
+function showLoggedInNav(){
+  if(currentUserData){ const p=document.getElementById('navUser'); p.textContent='👤 '+currentUserData.name.split(' ')[0]; p.classList.add('show'); }
+}
+async function goCabinet(){
+  if(!currentKey()) return;
+  showSection('cabinet');
+  document.getElementById('cabName').textContent='Loading… · Загрузка…';
+  try{
+    const fresh = await fetchUserDoc(currentKey());
+    if(fresh) currentUserData = fresh;
+  }catch(err){ console.error(err); }
+  renderCabinet();
+}
+function openAdminLogin(){ document.getElementById('adminErr').textContent=''; document.getElementById('inpCode').value=''; showSection('adminlogin'); }
+async function doAdminLogin(){
+  const c=document.getElementById('inpCode').value.trim();
+  const errEl=document.getElementById('adminErr'); const btn=document.getElementById('adminBtn');
+  if(c!==ADMIN_CODE){ errEl.textContent='Wrong code · Неверный код'; return; }
+  errEl.textContent=''; btn.disabled=true; btn.textContent='Loading… · Загрузка…';
+  try{
+    await renderAdmin();
+    showSection('admin');
+  }catch(err){
+    console.error(err);
+    errEl.textContent='Connection error — check internet and try again · Ошибка соединения';
+  }finally{
+    btn.disabled=false; btn.innerHTML='Enter · <span class="ru-inline">Войти</span>';
+  }
+}
+
+async function recordKnown(dept, word){
+  const key=currentKey(); if(!key || !currentUserData) return;
+  // reflect immediately in memory so the UI feels instant
+  currentUserData.depts[dept]=currentUserData.depts[dept]||{known:[],quizzes:[]};
+  if(!currentUserData.depts[dept].known.includes(word)) currentUserData.depts[dept].known.push(word);
+  try{
+    await updateDoc(doc(db,'users',key), {
+      [`depts.${dept}.known`]: arrayUnion(word),
+      lastActive: Date.now()
+    });
+  }catch(err){ console.error('Sync failed (recordKnown):', err); }
+}
+async function recordQuiz(dept, score, total){
+  const key=currentKey(); if(!key || !currentUserData) return;
+  const entry={score:score, total:total, date:Date.now()};
+  currentUserData.depts[dept]=currentUserData.depts[dept]||{known:[],quizzes:[]};
+  currentUserData.depts[dept].quizzes.push(entry);
+  try{
+    await updateDoc(doc(db,'users',key), {
+      [`depts.${dept}.quizzes`]: arrayUnion(entry),
+      lastActive: Date.now()
+    });
+  }catch(err){ console.error('Sync failed (recordQuiz):', err); }
+}
+
+function renderCabinet(){
+  const u=currentUserData; if(!u) return;
+  document.getElementById('cabName').textContent=u.name;
+  let totKnown=0, totWords=0, quizzesTaken=0, rows='';
+  Object.keys(departments).forEach(dk=>{
+    const d=departments[dk]; const rec=(u.depts||{})[dk];
+    const known=rec?(rec.known||[]).length:0;
+    const total=d.cards.length;
+    const quizzes=rec?(rec.quizzes||[]):[];
+    quizzesTaken+=quizzes.length;
+    const best=quizzes.length?Math.max.apply(null,quizzes.map(q=>Math.round(q.score/q.total*100))):null;
+    totKnown+=known; totWords+=total;
+    rows+='<tr><td>'+d.icon+' '+d.name+'</td><td>'+known+'/'+total+'</td><td>'+quizzes.length+'</td><td>'+(best!==null?best+'%':'—')+'</td></tr>';
+  });
+  document.getElementById('cabStats').innerHTML=
+    '<div class="cab-stat"><div class="num">'+totKnown+'</div><div class="lbl">Words known · Слов выучено</div></div>'+
+    '<div class="cab-stat"><div class="num">'+quizzesTaken+'</div><div class="lbl">Quizzes · Тестов пройдено</div></div>'+
+    '<div class="cab-stat"><div class="num">'+(Math.round(totKnown/totWords*100)||0)+'%</div><div class="lbl">Overall · Общий прогресс</div></div>';
+  document.getElementById('cabTable').innerHTML='<thead><tr><th>Role · Роль</th><th>Words · Слова</th><th>Quizzes · Тесты</th><th>Best · Лучший</th></tr></thead><tbody>'+rows+'</tbody>';
+}
+
+async function renderAdmin(){
+  const totalWordsAll=Object.keys(departments).reduce((s,k)=>s+departments[k].cards.length,0);
+  const snap = await getDocs(collection(db,'users'));
+  const users=[];
+  snap.forEach(docSnap=>users.push(docSnap.data()));
+  users.sort((a,b)=>(b.lastActive||0)-(a.lastActive||0));
+  let rows='', totalQuizzes=0;
+  users.forEach(u=>{
+    let known=0, quizzes=0, sSum=0, sCnt=0;
+    Object.keys(u.depts||{}).forEach(dk=>{
+      const rec=u.depts[dk]; known+=rec.known?rec.known.length:0;
+      (rec.quizzes||[]).forEach(q=>{ quizzes++; sSum+=q.score/q.total; sCnt++; });
+    });
+    totalQuizzes+=quizzes;
+    const avg=sCnt?Math.round(sSum/sCnt*100):null;
+    const pct=Math.round(known/totalWordsAll*100)||0;
+    const dt=new Date(u.lastActive).toLocaleDateString();
+    rows+='<tr><td>'+u.name+'</td><td>'+known+'</td><td>'+pct+'%</td><td>'+quizzes+'</td><td>'+(avg!==null?avg+'%':'—')+'</td><td>'+dt+'</td></tr>';
+  });
+  if(!users.length) rows='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">No staff data yet · Пока нет данных</td></tr>';
+  document.getElementById('admStats').innerHTML=
+    '<div class="cab-stat"><div class="num">'+users.length+'</div><div class="lbl">Staff · Сотрудников</div></div>'+
+    '<div class="cab-stat"><div class="num">'+totalQuizzes+'</div><div class="lbl">Quizzes · Тестов</div></div>';
+  document.getElementById('admTable').innerHTML='<thead><tr><th>Name · Имя</th><th>Words · Слова</th><th>Progress · Прогресс</th><th>Quizzes · Тесты</th><th>Avg · Ср. балл</th><th>Last active · Активность</th></tr></thead><tbody>'+rows+'</tbody>';
+}
+
+async function initAuth(){
+  const key=currentKey();
+  if(key){
+    try{
+      const data = await fetchUserDoc(key);
+      if(data){ currentUserData=data; showLoggedInNav(); showSection('home'); return; }
+    }catch(err){ console.error(err); }
+  }
+  showSection('login');
+}
+
+// expose the functions used by inline onclick="..." handlers — a module script
+// does not put its top-level functions on window automatically
+Object.assign(window, {
+  goHome, goTo, selectDept, toggleRu,
+  filterCards, flipCard, nextCard, prevCard, markCard,
+  answer, nextQuestion, restartQuiz,
+  showScene, speakCard, speakExample, speakEl,
+  doLogin, doLogout, goCabinet, openAdminLogin, doAdminLogin
+});
+
+buildHome();
+initAuth();
+</script>
+</body>
+</html>
